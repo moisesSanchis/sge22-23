@@ -7,11 +7,13 @@ class player(models.Model):
     _description = 'players'
 
     name = fields.Char()
-#    value = fields.Integer()
-#     value2 = fields.Float(compute="_value_pc", store=True)
-#     description = fields.Text()
-#
-#     @api.depends('value')
-#     def _value_pc(self):
-#         for record in self:
-#             record.value2 = float(record.value) / 100
+    avatar = fields.Image(max_width = 200, max_height = 200)
+    login = fields.Char()
+    password = fields.Char()
+
+class dungeon (models.Model):
+    _name = 'dungeons.dungeon'
+    _description = 'dungeons'
+    
+    name = fields.Char()
+    

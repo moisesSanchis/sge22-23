@@ -22,6 +22,11 @@
       <field name="res_model">dungeons.player</field>
       <field name="view_mode">tree,form</field>
     </record>
+     <record model="ir.actions.act_window" id="dungeons.action_dungeon_window">
+      <field name="name">Dungeons</field>
+      <field name="res_model">dungeons.dungeon</field>
+      <field name="view_mode">tree,form</field>
+    </record>
 
     <!-- server action to the one above -->
 <!--
@@ -51,6 +56,8 @@
 
     <menuitem name="Players" id="dungeons.player_list" parent="dungeons.game"
               action="dungeons.action_player_window"/>
+    <menuitem name="Dungeons" id="dungeons.dungeon_list" parent="dungeons.game"
+              action="dungeons.action_dungeon_window"/>
    
 
   </data>

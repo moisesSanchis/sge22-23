@@ -1,2 +1,3 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_dungeons_player,dungeons.player,model_dungeons_player,base.group_user,1,1,1,1
+access_dungeons_dungeon,dungeons.dungeon,model_dungeons_dungeon,base.group_user,1,1,1,1
