@@ -1,0 +1,15 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_dungeons_player,dungeons.player,model_dungeons_player,base.group_user,1,1,1,1
+access_dungeons_heart,dungeons.heart,model_dungeons_heart,base.group_user,1,1,1,1
+access_dungeons_ironmine,dungeons.ironmine,model_dungeons_ironmine,base.group_user,1,1,1,1
+access_dungeons_coalmine,dungeons.coalmine,model_dungeons_coalmine,base.group_user,1,1,1,1
+access_dungeons_forge,dungeons.forge,model_dungeons_forge,base.group_user,1,1,1,1
+access_dungeons_hatchery,dungeons.hatchery,model_dungeons_hatchery,base.group_user,1,1,1,1
+access_dungeons_defense_creatures,dungeons.defense_creatures,model_dungeons_defense_creatures,base.group_user,1,1,1,1
+access_dungeons_magical_creatures,dungeons.magical_creatures,model_dungeons_magical_creatures,base.group_user,1,1,1,1
+access_dungeons_warrior_creatures,dungeons.warrior_creatures,model_dungeons_heart,base.group_user,1,1,1,1
+
+
+
+
+

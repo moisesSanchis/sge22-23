@@ -145,3 +145,21 @@ Cancelling previous shutdown timeout
 ]
 New EH opened, aborting shutdown
 [10:30:56] New EH opened, aborting shutdown
+[12:03:47] Getting Manifest... hookyqr.beautify
+[12:03:47] Installing extension: hookyqr.beautify
+[12:03:48] Downloaded extension: hookyqr.beautify /var/lib/odoo/.vscode-server/data/CachedExtensionVSIXs/hookyqr.beautify-1.5.0
+[12:03:49] Extracted extension to /var/lib/odoo/.vscode-server/extensions/.11c948a2-f0f6-4a42-a4bb-804263ee6b52: hookyqr.beautify
+[12:03:49] Renamed to /var/lib/odoo/.vscode-server/extensions/hookyqr.beautify-1.5.0
+[12:03:49] Extracting completed. hookyqr.beautify
+[12:03:49] Extension installed successfully: hookyqr.beautify
+[12:04:25] Uninstalling extension: hookyqr.beautify@1.5.0
+[12:04:26] Detected extension removed from another source hookyqr.beautify
+[12:04:26] Successfully uninstalled extension: hookyqr.beautify@1.5.0
+[12:06:28] Failed to install extension. ms-python.autopep8
+[12:06:28] ReleaseVersionNotFound: Can't install release version of 'ms-python.autopep8' extension because it has no release version.
+    at G.checkAndGetCompatibleVersion (/var/lib/odoo/.vscode-server/bin/74b1f979648cc44d385a2286793c226e611f59e7/out/vs/server/node/server.main.js:130:39469)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async G.installFromGallery (/var/lib/odoo/.vscode-server/bin/74b1f979648cc44d385a2286793c226e611f59e7/out/vs/server/node/server.main.js:130:30612) {
+  code: 'ReleaseVersionNotFound'
+}

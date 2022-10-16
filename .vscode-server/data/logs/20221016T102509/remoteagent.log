@@ -11,3 +11,19 @@
 [2022-10-16 10:25:56.355] [remoteagent] [info] [127.0.0.1][5368a30a][ExtensionHostConnection] New connection established.
 [2022-10-16 10:25:56.365] [remoteagent] [info] [127.0.0.1][5368a30a][ExtensionHostConnection] <2968> Launched Extension Host Process.
 [2022-10-16 10:30:56.168] [remoteagent] [info] New EH opened, aborting shutdown
+[2022-10-16 12:03:47.888] [remoteagent] [info] Getting Manifest... hookyqr.beautify
+[2022-10-16 12:03:47.951] [remoteagent] [info] Installing extension: hookyqr.beautify
+[2022-10-16 12:03:48.783] [remoteagent] [info] Downloaded extension: hookyqr.beautify /var/lib/odoo/.vscode-server/data/CachedExtensionVSIXs/hookyqr.beautify-1.5.0
+[2022-10-16 12:03:49.328] [remoteagent] [info] Extracted extension to /var/lib/odoo/.vscode-server/extensions/.11c948a2-f0f6-4a42-a4bb-804263ee6b52: hookyqr.beautify
+[2022-10-16 12:03:49.337] [remoteagent] [info] Renamed to /var/lib/odoo/.vscode-server/extensions/hookyqr.beautify-1.5.0
+[2022-10-16 12:03:49.342] [remoteagent] [info] Extracting completed. hookyqr.beautify
+[2022-10-16 12:03:49.346] [remoteagent] [info] Extension installed successfully: hookyqr.beautify
+[2022-10-16 12:04:25.972] [remoteagent] [info] Uninstalling extension: hookyqr.beautify@1.5.0
+[2022-10-16 12:04:26.140] [remoteagent] [info] Detected extension removed from another source hookyqr.beautify
+[2022-10-16 12:04:26.230] [remoteagent] [info] Successfully uninstalled extension: hookyqr.beautify@1.5.0
+[2022-10-16 12:06:28.418] [remoteagent] [error] Failed to install extension. ms-python.autopep8
+[2022-10-16 12:06:28.422] [remoteagent] [error] ReleaseVersionNotFound: Can't install release version of 'ms-python.autopep8' extension because it has no release version.
+    at G.checkAndGetCompatibleVersion (/var/lib/odoo/.vscode-server/bin/74b1f979648cc44d385a2286793c226e611f59e7/out/vs/server/node/server.main.js:130:39469)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async G.installFromGallery (/var/lib/odoo/.vscode-server/bin/74b1f979648cc44d385a2286793c226e611f59e7/out/vs/server/node/server.main.js:130:30612)
