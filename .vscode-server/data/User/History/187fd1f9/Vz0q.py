@@ -25,22 +25,6 @@ class heart(models.Model): #falta que no se puedan modificar los campos y añadi
     defense_creature = fields.Integer(default = 0)
     magical_creature = fields.Integer(default = 0)
     warrior_creature = fields.Integer(default = 0)
-    
-"""
-class building(models.Model):
-     _name = 'dungeons.building' 
-    _description = 'Building'
-     
-    level = fields.Integer(default = 1)
-    production_iron = fields.Integer(default = 1)
-    production_coal = fields.Integer(default = 1)
-    production_steel = fields.Integer(default = 1)
-    consume_iron = fields.Integer(default = 1)
-    consume_coal = fields.Integer(default = 2)
-    producton_magical_creatures = fields.Integer()
-    producton_warrior_creatures = fields.Integer()
-    producton_defense_creatures = fields.Integer()
-"""
  
 class ironmine(models.Model):
      _name = 'dungeons.ironmine' 

@@ -42,26 +42,6 @@
       <field name="res_model">dungeons.forge</field>
       <field name="view_mode">tree,form</field>
     </record>
-     <record model="ir.actions.act_window" id="dungeons.action_hatchery_window">
-      <field name="name">Hatchery</field>
-      <field name="res_model">dungeons.hatchery</field>
-      <field name="view_mode">tree,form</field>
-    </record>
-     <record model="ir.actions.act_window" id="dungeons.action_defense_creatures_window">
-      <field name="name">Defense Creatures</field>
-      <field name="res_model">dungeons.defense_creatures</field>
-      <field name="view_mode">tree,form</field>
-    </record>
-     <record model="ir.actions.act_window" id="dungeons.action_magical_creatures_window">
-      <field name="name">Magical Creatures</field>
-      <field name="res_model">dungeons.magical_creatures</field>
-      <field name="view_mode">tree,form</field>
-    </record>
-     <record model="ir.actions.act_window" id="dungeons.action_warrior_creatures_window">
-      <field name="name">Warrior Creatures</field>
-      <field name="res_model">dungeons.warrior_creatures</field>
-      <field name="view_mode">tree,form</field>
-    </record>
 
     <!-- server action to the one above -->
 <!--
@@ -101,11 +81,5 @@
               action="dungeons.action_forge_window"/>
     <menuitem name="Hatchery" id="dungeons.hatchery_list" parent="dungeons.game"
               action="dungeons.action_hatchery_window"/>
-    <menuitem name="Defense Creatures" id="dungeons.defense_creatures_list" parent="dungeons.game"
-              action="dungeons.action_defense_creatures_window"/>
-    <menuitem name="Magical Creatures" id="dungeons.magical_creatures_list" parent="dungeons.game"
-              action="dungeons.action_magical_creatures_window"/>
-     <menuitem name="Warrior Creatures" id="dungeons.warrior_creatures_list" parent="dungeons.game"
-              action="dungeons.action_warrior_creatures_window"/>
   </data>
 </odoo>
