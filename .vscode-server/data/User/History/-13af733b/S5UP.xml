@@ -132,6 +132,9 @@
               <field name="production_warrior_creatures" />
               <field name="production_defense_creatures" />
              </group>
+              <group>
+                <field name="buildings" />
+              </group>
             </group>
           </sheet>
         </form>

@@ -5,14 +5,20 @@
 * the Visual Studio Code Server License Terms (https://aka.ms/vscode-server-license) and
 * the Microsoft Privacy Statement (https://privacy.microsoft.com/en-US/privacystatement).
 *
-Server bound to 127.0.0.1:42735 (IPv4)
-Extension host agent listening on 42735
+Server bound to 127.0.0.1:35239 (IPv4)
+Extension host agent listening on 35239
 
-[06:32:57] Extension host agent started.
-[06:32:57] [127.0.0.1][16ae8ff0][ManagementConnection] New connection established.
-[06:32:58] [127.0.0.1][f48a8a6c][ExtensionHostConnection] New connection established.
-[06:32:58] [127.0.0.1][f48a8a6c][ExtensionHostConnection] <1754> Launched Extension Host Process.
-[06:32:58] Deleted from disk hookyqr.beautify /var/lib/odoo/.vscode-server/extensions/hookyqr.beautify-1.5.0
+[16:46:51] Extension host agent started.
+[16:46:52] [127.0.0.1][d1bc20ba][ManagementConnection] New connection established.
+[16:46:52] [127.0.0.1][c781c523][ExtensionHostConnection] New connection established.
+[16:46:52] [127.0.0.1][c781c523][ExtensionHostConnection] <1456> Launched Extension Host Process.
+[16:46:54] Error: getaddrinfo EAI_AGAIN mobile.events.data.microsoft.com
+    at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:71:26) {
+  errno: -3001,
+  code: 'EAI_AGAIN',
+  syscall: 'getaddrinfo',
+  hostname: 'mobile.events.data.microsoft.com'
+}
 [IPC Library: Pty Host]  WARN Shell integration cannot be enabled for executable "/bin/sh" and args [
   '-c',
   'wget --version > /dev/null\n' +
@@ -73,10 +79,3 @@ Extension host agent listening on 42735
     'fi\n' +
     'exit 0'
 ]
-[08:00:52] Getting Manifest... redhat.vscode-xml
-[08:00:52] Installing extension: redhat.vscode-xml
-[08:01:05] Downloaded extension: redhat.vscode-xml /var/lib/odoo/.vscode-server/data/CachedExtensionVSIXs/redhat.vscode-xml-0.21.0-linux-x64
-[08:01:06] Extracted extension to /var/lib/odoo/.vscode-server/extensions/.4370776c-fbd8-415d-9002-0ff64aace149: redhat.vscode-xml
-[08:01:06] Renamed to /var/lib/odoo/.vscode-server/extensions/redhat.vscode-xml-0.21.0-linux-x64
-[08:01:06] Extracting completed. redhat.vscode-xml
-[08:01:07] Extension installed successfully: redhat.vscode-xml

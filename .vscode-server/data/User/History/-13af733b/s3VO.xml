@@ -82,15 +82,14 @@
       </field>
     </record>
 
-    <record model="ir.ui.view" id="dungeons.buildings_tree_list">
+    <record model="ir.ui.view" id="dungeons.buidings_tree_list">
       <field name="name">dungeons buildings list</field>
-      <field name="model">dungeons.buildings</field>
+      <field name="model">dungeons.heart</field>
       <field name="arch" type="xml">
         <tree>
           <field name="name" />
           <field name="level" />
           <field name="heart" />
-          <field name="image_building" />
           <field name="building_type" />
           <field name="production_iron" />
           <field name="production_coal" />
@@ -104,34 +103,31 @@
       </field>
     </record>
 
-    <record model="ir.ui.view" id="dungeons.buildings_form_list">
-      <field name="name">dungeons buildings list</field>
-      <field name="model">dungeons.buildings</field>
+    <record model="ir.ui.view" id="dungeons.heart_form_list">
+      <field name="name">dungeons heart list</field>
+      <field name="model">dungeons.heart</field>
       <field name="arch" type="xml">
         <form>
           <sheet>
             <group>
+            <group>
+              <field name="name" />
+              <field name="avatar_heart" widget="image" />
+              <field name="life" />
+            </group>
               <group>
-                <field name="name" />
-                <field name="level" />
-                <field name="heart" />
-                <field name="image_building" widget="image" />
-                <field name="building_type" />
+                <field name="iron" />
+                <field name="coal" />
+                <field name="steel" />
               </group>
-             <group>
-              <field name="production_iron" />
-              <field name="production_coal" />
-              <field name="production_steel" />
-             </group>
               <group>
-                <field name="consume_iron" />
-                <field name="consume_coal" />
+                <field name="defense_creature" />
+                <field name="magical_creature" />
+                <field name="warrior_creature" />
               </group>
-             <group>
-              <field name="production_magical_creatures" />
-              <field name="production_warrior_creatures" />
-              <field name="production_defense_creatures" />
-             </group>
+              <group>
+                <field name="buildings" />
+              </group>
             </group>
           </sheet>
         </form>

@@ -90,7 +90,7 @@
           <field name="name" />
           <field name="level" />
           <field name="heart" />
-          <field name="image_building" />
+          <field name="image_buiding" widget="image" />
           <field name="building_type" />
           <field name="production_iron" />
           <field name="production_coal" />
@@ -115,7 +115,7 @@
                 <field name="name" />
                 <field name="level" />
                 <field name="heart" />
-                <field name="image_building" widget="image" />
+                <field name="image_buiding" />
                 <field name="building_type" />
               </group>
              <group>
@@ -132,6 +132,9 @@
               <field name="production_warrior_creatures" />
               <field name="production_defense_creatures" />
              </group>
+              <group>
+                <field name="buildings" />
+              </group>
             </group>
           </sheet>
         </form>
