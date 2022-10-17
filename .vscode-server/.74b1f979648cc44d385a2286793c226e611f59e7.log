@@ -5,13 +5,14 @@
 * the Visual Studio Code Server License Terms (https://aka.ms/vscode-server-license) and
 * the Microsoft Privacy Statement (https://privacy.microsoft.com/en-US/privacystatement).
 *
-Server bound to 127.0.0.1:35985 (IPv4)
-Extension host agent listening on 35985
+Server bound to 127.0.0.1:42735 (IPv4)
+Extension host agent listening on 42735
 
-[10:25:10] Extension host agent started.
-[10:25:10] [127.0.0.1][ca0b383c][ManagementConnection] New connection established.
-[10:25:10] [127.0.0.1][d647a50a][ExtensionHostConnection] New connection established.
-[10:25:10] [127.0.0.1][d647a50a][ExtensionHostConnection] <2787> Launched Extension Host Process.
+[06:32:57] Extension host agent started.
+[06:32:57] [127.0.0.1][16ae8ff0][ManagementConnection] New connection established.
+[06:32:58] [127.0.0.1][f48a8a6c][ExtensionHostConnection] New connection established.
+[06:32:58] [127.0.0.1][f48a8a6c][ExtensionHostConnection] <1754> Launched Extension Host Process.
+[06:32:58] Deleted from disk hookyqr.beautify /var/lib/odoo/.vscode-server/extensions/hookyqr.beautify-1.5.0
 [IPC Library: Pty Host]  WARN Shell integration cannot be enabled for executable "/bin/sh" and args [
   '-c',
   'wget --version > /dev/null\n' +
@@ -72,94 +73,10 @@ Extension host agent listening on 35985
     'fi\n' +
     'exit 0'
 ]
-[10:25:39] [127.0.0.1][ca0b383c][ManagementConnection] The client has disconnected gracefully, so the connection will be disposed.
-[10:25:39] [127.0.0.1][d647a50a][ExtensionHostConnection] <2787> Extension Host Process exited with code: 0, signal: null.
-Last EH closed, waiting before shutting down
-[10:25:39] Last EH closed, waiting before shutting down
-Got delay-shutdown request while in shutdown timeout, delaying
-[10:25:56] Got delay-shutdown request while in shutdown timeout, delaying
-Cancelling previous shutdown timeout
-[10:25:56] Cancelling previous shutdown timeout
-[10:25:56] [127.0.0.1][1820248d][ManagementConnection] New connection established.
-[10:25:56] [127.0.0.1][5368a30a][ExtensionHostConnection] New connection established.
-[10:25:56] [127.0.0.1][5368a30a][ExtensionHostConnection] <2968> Launched Extension Host Process.
-[IPC Library: Pty Host]  WARN Shell integration cannot be enabled for executable "/bin/sh" and args [
-  '-c',
-  'wget --version > /dev/null\n' +
-    'if [ $? -eq 0 ]\n' +
-    'then\n' +
-    "\twget --connect-timeout=7 --tries=1 --dns-timeout=7 -q --header='Metadata:true' -O - http://169.254.169.254/metadata/instance?api-version=2019-03-11\n" +
-    'else\n' +
-    '\tcurl --version > /dev/null\n' +
-    '\tif [ $? -eq 0 ]\n' +
-    '\tthen\n' +
-    "\t\tcurl --connect-timeout 7 -s --header='Metadata:true' http://169.254.169.254/metadata/instance?api-version=2019-03-11\n" +
-    '\tfi\n' +
-    'fi\n' +
-    'exit 0'
-]
-[IPC Library: Pty Host]  WARN Shell integration cannot be enabled for executable "/bin/sh" and args [
-  '-c',
-  'wget --version > /dev/null\n' +
-    'if [ $? -eq 0 ]\n' +
-    'then\n' +
-    '\twget --connect-timeout=7 --tries=1 --dns-timeout=7 -q  -O - http://169.254.169.254/latest/meta-data/instance-id\n' +
-    'else\n' +
-    '\tcurl --version > /dev/null\n' +
-    '\tif [ $? -eq 0 ]\n' +
-    '\tthen\n' +
-    '\t\tcurl --connect-timeout 7 -s  http://169.254.169.254/latest/meta-data/instance-id\n' +
-    '\tfi\n' +
-    'fi\n' +
-    'exit 0'
-]
-[IPC Library: Pty Host]  WARN Shell integration cannot be enabled for executable "/bin/sh" and args [
-  '-c',
-  'wget --version > /dev/null\n' +
-    'if [ $? -eq 0 ]\n' +
-    'then\n' +
-    '\twget --connect-timeout=7 --tries=1 --dns-timeout=7 -q  -O - http://169.254.169.254/metadata/v1/id\n' +
-    'else\n' +
-    '\tcurl --version > /dev/null\n' +
-    '\tif [ $? -eq 0 ]\n' +
-    '\tthen\n' +
-    '\t\tcurl --connect-timeout 7 -s  http://169.254.169.254/metadata/v1/id\n' +
-    '\tfi\n' +
-    'fi\n' +
-    'exit 0'
-]
-[IPC Library: Pty Host]  WARN Shell integration cannot be enabled for executable "/bin/sh" and args [
-  '-c',
-  'wget --version > /dev/null\n' +
-    'if [ $? -eq 0 ]\n' +
-    'then\n' +
-    "\twget --connect-timeout=7 --tries=1 --dns-timeout=7 -q --header='Metadata-Flavor:Google' -O - http://metadata.google.internal/computeMetadata/v1/instance/id\n" +
-    'else\n' +
-    '\tcurl --version > /dev/null\n' +
-    '\tif [ $? -eq 0 ]\n' +
-    '\tthen\n' +
-    "\t\tcurl --connect-timeout 7 -s --header='Metadata-Flavor:Google' http://metadata.google.internal/computeMetadata/v1/instance/id\n" +
-    '\tfi\n' +
-    'fi\n' +
-    'exit 0'
-]
-New EH opened, aborting shutdown
-[10:30:56] New EH opened, aborting shutdown
-[12:03:47] Getting Manifest... hookyqr.beautify
-[12:03:47] Installing extension: hookyqr.beautify
-[12:03:48] Downloaded extension: hookyqr.beautify /var/lib/odoo/.vscode-server/data/CachedExtensionVSIXs/hookyqr.beautify-1.5.0
-[12:03:49] Extracted extension to /var/lib/odoo/.vscode-server/extensions/.11c948a2-f0f6-4a42-a4bb-804263ee6b52: hookyqr.beautify
-[12:03:49] Renamed to /var/lib/odoo/.vscode-server/extensions/hookyqr.beautify-1.5.0
-[12:03:49] Extracting completed. hookyqr.beautify
-[12:03:49] Extension installed successfully: hookyqr.beautify
-[12:04:25] Uninstalling extension: hookyqr.beautify@1.5.0
-[12:04:26] Detected extension removed from another source hookyqr.beautify
-[12:04:26] Successfully uninstalled extension: hookyqr.beautify@1.5.0
-[12:06:28] Failed to install extension. ms-python.autopep8
-[12:06:28] ReleaseVersionNotFound: Can't install release version of 'ms-python.autopep8' extension because it has no release version.
-    at G.checkAndGetCompatibleVersion (/var/lib/odoo/.vscode-server/bin/74b1f979648cc44d385a2286793c226e611f59e7/out/vs/server/node/server.main.js:130:39469)
-    at runMicrotasks (<anonymous>)
-    at processTicksAndRejections (node:internal/process/task_queues:96:5)
-    at async G.installFromGallery (/var/lib/odoo/.vscode-server/bin/74b1f979648cc44d385a2286793c226e611f59e7/out/vs/server/node/server.main.js:130:30612) {
-  code: 'ReleaseVersionNotFound'
-}
+[08:00:52] Getting Manifest... redhat.vscode-xml
+[08:00:52] Installing extension: redhat.vscode-xml
+[08:01:05] Downloaded extension: redhat.vscode-xml /var/lib/odoo/.vscode-server/data/CachedExtensionVSIXs/redhat.vscode-xml-0.21.0-linux-x64
+[08:01:06] Extracted extension to /var/lib/odoo/.vscode-server/extensions/.4370776c-fbd8-415d-9002-0ff64aace149: redhat.vscode-xml
+[08:01:06] Renamed to /var/lib/odoo/.vscode-server/extensions/redhat.vscode-xml-0.21.0-linux-x64
+[08:01:06] Extracting completed. redhat.vscode-xml
+[08:01:07] Extension installed successfully: redhat.vscode-xml

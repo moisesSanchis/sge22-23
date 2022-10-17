@@ -1,0 +1,12 @@
+[2022-10-17 06:32:57.543] [remoteagent] [info] Extension host agent started.
+[2022-10-17 06:32:57.978] [remoteagent] [info] [127.0.0.1][16ae8ff0][ManagementConnection] New connection established.
+[2022-10-17 06:32:58.061] [remoteagent] [info] [127.0.0.1][f48a8a6c][ExtensionHostConnection] New connection established.
+[2022-10-17 06:32:58.070] [remoteagent] [info] [127.0.0.1][f48a8a6c][ExtensionHostConnection] <1754> Launched Extension Host Process.
+[2022-10-17 06:32:58.789] [remoteagent] [info] Deleted from disk hookyqr.beautify /var/lib/odoo/.vscode-server/extensions/hookyqr.beautify-1.5.0
+[2022-10-17 08:00:52.677] [remoteagent] [info] Getting Manifest... redhat.vscode-xml
+[2022-10-17 08:00:52.763] [remoteagent] [info] Installing extension: redhat.vscode-xml
+[2022-10-17 08:01:05.618] [remoteagent] [info] Downloaded extension: redhat.vscode-xml /var/lib/odoo/.vscode-server/data/CachedExtensionVSIXs/redhat.vscode-xml-0.21.0-linux-x64
+[2022-10-17 08:01:06.981] [remoteagent] [info] Extracted extension to /var/lib/odoo/.vscode-server/extensions/.4370776c-fbd8-415d-9002-0ff64aace149: redhat.vscode-xml
+[2022-10-17 08:01:06.989] [remoteagent] [info] Renamed to /var/lib/odoo/.vscode-server/extensions/redhat.vscode-xml-0.21.0-linux-x64
+[2022-10-17 08:01:06.993] [remoteagent] [info] Extracting completed. redhat.vscode-xml
+[2022-10-17 08:01:07.000] [remoteagent] [info] Extension installed successfully: redhat.vscode-xml
