@@ -52,7 +52,7 @@ class building_type(models.Model):
     _name = 'dungeons.building_type'
     _description = 'Building types'
      
-    name = fields.Char(string='type')
+    name = fields.Char(string='')
     image_building = fields.Image()
     production_iron = fields.Float()
     production_coal = fields.Float()

@@ -1,0 +1,17 @@
+[Info  - 9:11:52] Oct 18, 2022 09:11:52 org.eclipse.lemminx.XMLLanguageServer initialize()
+Message: Initializing XML Language server
+LemMinX Server info:
+ - Version : 0.21.0
+ - Native Image
+ - VM Version : 17.0.2
+ - Git [Branch 183b1860592c3637a544d21934445291c01f4f32] 183b186 - [maven-release-plugin] prepare release 0.21.0
+[Warn  - 9:47:46] Oct 18, 2022 09:47:46 org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation()
+Message: Unmatched cancel notification for request id 20
+[Warn  - 9:48:17] Oct 18, 2022 09:48:17 org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation()
+Message: Unmatched cancel notification for request id 74
+[Warn  - 9:48:38] Oct 18, 2022 09:48:38 org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation()
+Message: Unmatched cancel notification for request id 134
+[Warn  - 10:10:55] Oct 18, 2022 10:10:55 org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation()
+Message: Unmatched cancel notification for request id 801
+[Warn  - 10:59:11] Oct 18, 2022 10:59:11 org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation()
+Message: Unmatched cancel notification for request id 1324

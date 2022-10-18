@@ -37,3 +37,6 @@
 [2022-10-17 15:01:30.083] [exthost] [error] TypeError: Cannot read properties of null (reading 'tags')
 	at T (/var/lib/odoo/.vscode-server/extensions/redhat.vscode-xml-0.21.0-linux-x64/dist/extension.js:2:394585)
 	at async J.resolveCompletionItem (/var/lib/odoo/.vscode-server/bin/74b1f979648cc44d385a2286793c226e611f59e7/out/vs/workbench/api/node/extensionHostProcess.js:87:52586)
+[2022-10-17 15:51:56.544] [exthost] [info] Extension host terminating: received terminate message from renderer
+[2022-10-17 15:51:56.545] [exthost] [info] Lock '/var/lib/odoo/.vscode-server/data/User/workspaceStorage/e954bc60b36f91d5b4b8f218a421c0bd/vscode.lock': Marking the lockfile as scheduled to be released in 6000 ms.
+[2022-10-17 15:51:56.736] [exthost] [info] Extension host with pid 1456 exiting with code 0
