@@ -1,0 +1,60 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="dungeons.heart_tree_list">
+            <field name="name">dungeons heart list</field>
+            <field name="model">dungeons.heart</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name" />
+                    <field name="player" />
+                    <field name="life" />
+                    <field name="iron" />
+                    <field name="coal" />
+                    <field name="steel" />
+                    <field name="defense_creature" />
+                    <field name="magical_creature" />
+                    <field name="warrior_creature" />
+                    <field name="buildings" />
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="dungeons.heart_form_list">
+            <field name="name">dungeons heart list</field>
+            <field name="model">dungeons.heart</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group string="Basic Atributes">
+                                <field name="avatar_heart" widget="image" />
+                                <field name="name" />
+                                <field name="life" />
+                            </group>
+                            <group string="Mines">
+                                <field name="iron" />
+                                <field name="coal" />
+                                <field name="steel" />
+                            </group>
+                            <group string="Creatures">
+                                <field name="defense_creature" />
+                                <field name="magical_creature" />
+                                <field name="warrior_creature" />
+                            </group>
+                            <group string="Buildings">
+                                <field name="buildings" mode="tree">
+                                    <tree>
+                                        <field name="name" />
+                                        <field name="level" />
+                                        <field name="building_type" />
+                                    </tree>
+                                </field>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+
+</odoo>

@@ -2,35 +2,6 @@
   <data>
     <!-- explicit list view definition -->
 
-    <record model="ir.ui.view" id="dungeons.player_tree_list">
-      <field name="name">dungeons player list</field>
-      <field name="model">dungeons.player</field>
-      <field name="arch" type="xml">
-        <tree>
-          <field name="name" />
-          <field name="heart_player" />
-          <field name="login" />
-        </tree>
-      </field>
-    </record>
-
-    <record model="ir.ui.view" id="dungeons.player_form_list">
-      <field name="name">dungeons player list</field>
-      <field name="model">dungeons.player</field>
-      <field name="arch" type="xml">
-        <form>
-          <sheet>
-            <group>
-              <field name="name" />
-              <field name="avatar" widget="image" />
-              <field name="heart_player" />
-              <field name="login" />
-              <field name="password" password="true" />
-            </group>
-          </sheet>
-        </form>
-      </field>
-    </record>
 
   <record model="ir.ui.view" id="dungeons.heart_tree_list">
       <field name="name">dungeons heart list</field>
@@ -58,28 +29,37 @@
         <form>
           <sheet>
             <group>
-              <field name="name" />
+            <group string="Basic atributes">
               <field name="avatar_heart" widget="image" />
+              <field name="name" />
               <field name="life" />
             </group>
-              <group>
+              <group string="Mines">
                 <field name="iron" />
                 <field name="coal" />
                 <field name="steel" />
               </group>
-              <group>
+              <group string="Creatures">
                 <field name="defense_creature" />
                 <field name="magical_creature" />
                 <field name="warrior_creature" />
               </group>
-              <group>
-                <field name="buildings" />
+              <group string="Buildings">
+                <field name="buildings" mode="tree">
+                  <tree>
+                    <field name="name"/>
+                    <field name="level"/>
+                    <field name="building_type"/>
+                  </tree>
+                </field>
               </group>
-            
+            </group>
           </sheet>
         </form>
       </field>
     </record>
+
+    
 
 
     <!-- actions opening views on models -->

@@ -4,13 +4,13 @@
       <field name="name">dungeons buildings list</field>
       <field name="model">dungeons.buildings</field>
       <field name="arch" type="xml">
-        <tree>
+        <tree decoration-info="state=='draft'">
           <field name="name" />
           <field name="level" />
           <field name="heart" />
-          <field name="image_building" invisible="1" />
+          <field name="image_building" />
           <field name="building_type" />
-          <field name="production_iron"/>
+          <field name="production_iron" />
           <field name="production_coal" />
           <field name="production_steel" />
           <field name="consume_iron" />

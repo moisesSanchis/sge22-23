@@ -70,3 +70,4 @@
 [2022-10-18 10:58:07.621] [exthost] [error] TypeError: Cannot read properties of null (reading 'tags')
 	at T (/var/lib/odoo/.vscode-server/extensions/redhat.vscode-xml-0.21.0-linux-x64/dist/extension.js:2:394585)
 	at async J.resolveCompletionItem (/var/lib/odoo/.vscode-server/bin/74b1f979648cc44d385a2286793c226e611f59e7/out/vs/workbench/api/node/extensionHostProcess.js:87:52586)
+                                                                                                                                                                                                                                                                                                                                     

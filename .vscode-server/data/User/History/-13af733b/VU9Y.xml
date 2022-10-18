@@ -3,6 +3,11 @@
     <!-- explicit list view definition -->
 
 
+
+
+    
+
+
     <!-- actions opening views on models -->
 
     <record model="ir.actions.act_window" id="dungeons.action_player_window">

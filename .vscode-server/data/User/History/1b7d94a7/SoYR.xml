@@ -8,9 +8,8 @@
           <field name="name" />
           <field name="level" />
           <field name="heart" />
-          <field name="image_building" invisible="1" />
           <field name="building_type" />
-          <field name="production_iron"/>
+          <field name="production_iron" />
           <field name="production_coal" />
           <field name="production_steel" />
           <field name="consume_iron" />
