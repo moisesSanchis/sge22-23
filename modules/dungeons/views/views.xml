@@ -20,6 +20,11 @@
       <field name="res_model">dungeons.buildings</field>
       <field name="view_mode">tree,form</field>
     </record>
+    <record model="ir.actions.act_window" id="dungeons.action_building_type_window">
+      <field name="name">Building Types</field>
+      <field name="res_model">dungeons.building_type</field>
+      <field name="view_mode">tree,form</field>
+    </record>
 
 
     <!-- server action to the one above -->
@@ -51,6 +56,7 @@
     <menuitem name="Players" id="dungeons.player_list" parent="dungeons.game" action="dungeons.action_player_window" />
     <menuitem name="Hearts" id="dungeons.heart_list" parent="dungeons.game" action="dungeons.action_heart_window" />
     <menuitem name="Buildings" id="dungeons.buildings_list" parent="dungeons.game" action="dungeons.action_buildings_window" />
+    <menuitem name="Building_type" id="dungeons.buildings_type_list" parent="dungeons.game" action="dungeons.action_building_type_window" />
 
   </data>
 </odoo>
