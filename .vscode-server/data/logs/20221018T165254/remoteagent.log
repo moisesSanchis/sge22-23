@@ -4,3 +4,6 @@
 [2022-10-18 16:52:54.782] [remoteagent] [info] [127.0.0.1][fa4bcd22][ExtensionHostConnection] <1470> Launched Extension Host Process.
 [2022-10-18 16:52:56.565] [remoteagent] [error] Error: getaddrinfo EAI_AGAIN mobile.events.data.microsoft.com
     at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:71:26)
+[2022-10-18 15:33:26.705] [remoteagent] [info] [127.0.0.1][c4500d0e][ManagementConnection] The client has disconnected gracefully, so the connection will be disposed.
+[2022-10-18 15:33:26.851] [remoteagent] [info] [127.0.0.1][fa4bcd22][ExtensionHostConnection] <1470> Extension Host Process exited with code: 0, signal: null.
+[2022-10-18 15:33:26.851] [remoteagent] [info] Last EH closed, waiting before shutting down

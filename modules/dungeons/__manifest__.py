@@ -28,11 +28,14 @@
         'views/heart_view.xml',
         'views/player_view.xml',
         'views/building_view.xml',
+        'views/building_type_view.xml',
         'views/views.xml',
         'views/templates.xml',
+        'demo/data.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
         'demo/demo.xml',
+
     ],
 }
