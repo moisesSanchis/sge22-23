@@ -1338,5 +1338,12 @@ YRVYxDOHBc9AgejUd0EtfiNW78bglcZdlyy1s31MsC4hfqGcMwUblw3cLy8wn//Z</field>
 
         </record>
 
+ <record id="dungeons.heart" model="dungeons.heart">
+            <field name="name">Corazon de la Mazmorra</field>
+            <field name="life">2000</field>
+            <field name="iron">100</field>
+            <field name="coal">50</field>
+            <field name="steel">10</field>
+        </record>
     </data>
 </odoo>
