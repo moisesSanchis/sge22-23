@@ -18,7 +18,7 @@ class heart(models.Model):
     
     name = fields.Char()
     avatar_heart = fields.Image(max_width = 200, max_height = 200)
-    player = fields.Many2one('dungeons.player')
+    player = fields.Many2one('dungeons.player', ondelete='cascade')
     life = fields.Integer(default = 2000)
     iron = fields.Integer(default = 100)
     coal = fields.Integer(default = 50)
@@ -34,8 +34,8 @@ class buildings(models.Model):
     
     name = fields.Char() 
     level = fields.Integer()
-    heart = fields.Many2one('dungeons.heart')
-    building_type = fields.Many2one('dungeons.building_type')
+    heart = fields.Many2one('dungeons.heart', ondelete='restrict')
+    building_type = fields.Many2one('dungeons.building_type', ondelete='restrict')
     image_building = fields.Image(max_width = 200, max_height = 200, related = 'building_type.image_building')
     production_iron = fields.Float(related = 'building_type.production_iron')
     production_coal = fields.Float(related = 'building_type.production_coal')
