@@ -5,9 +5,9 @@
             <field name="model">dungeons.player</field>
             <field name="arch" type="xml">
                 <tree>
-                    <field name="name" />
-                    <field name="heart_player" />
-                    <field name="login" />
+                    <field name="name"/>
+                    <field name="heart_player"/>
+                    <field name="login"/>
                 </tree>
             </field>
         </record>
@@ -19,20 +19,67 @@
                 <form>
                     <sheet>
                         <group string="Player Atributes">
-                            <field name="avatar" widget="image" />
-                            <field name="name" />
+                            <field name="avatar" widget="image"/>
+                            <field name="name"/>
                             <field name="heart_player" mode="tree">
                                 <tree>
                                     <field name="name"/>
-                                    <field name="life"/>   
+                                    <field name="life"/>
                                 </tree>
                             </field>
-                            <field name="login" />
-                            <field name="password" password="true" />
+                            <field name="login"/>
+                            <field name="password" password="true"/>
                         </group>
                     </sheet>
                 </form>
             </field>
         </record>
+
+        <record model="ir.ui.view" id="dungeons.player_kanban">
+            <field name="name">dungeons player kanban</field>
+            <field name="model">dungeons.player</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="id"/>
+                    <field name="name"/>
+                    <field name="heart_player"/>
+                    <field name="login"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_card o_kanban_record_has_image_fill ">
+                                <div class="o_kanban_image_fill_left o_kanban_image_full d-none d-md-block"
+                                     t-attf-style="background-image:url('#{kanban_image('dungeons.player',
+                            'avatar', record.id.value, placeholder)}')">
+                                </div>
+
+                                <div class="oe_kanban_details d-flex flex-column">
+                                    <a type="open">
+                                        <h4 class="o_kanban_record_title oe_partner_heading">
+                                            <field name="name"/>
+                                        </h4>
+                                    </a>
+                                    <ul>
+                                        <li>Name:
+                                            <field name="name"/>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+         <record model="ir.ui.view" id="dungeons.player_search">
+            <field name="name">dungeons player search</field>
+            <field name="model">dungeons.player</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="heart_player"/>
+                </search>
+            </field>
+        </record>
+
     </data>
 </odoo>

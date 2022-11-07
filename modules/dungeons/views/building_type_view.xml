@@ -2,54 +2,125 @@
     <data>
 
         <record model="ir.ui.view" id="dungeons.building_type_tree_list">
-      <field name="name">dungeons buildings list</field>
-      <field name="model">dungeons.buildings</field>
-      <field name="arch" type="xml">
-        <tree>
-          <field name="name" />
-          <field name="image_building" invisible="1" />
-          <field name="production_iron"/>
-          <field name="production_coal" />
-          <field name="production_steel" />
-          <field name="consume_iron" />
-          <field name="consume_coal" />
-          <field name="production_magical_creatures" />
-          <field name="production_warrior_creatures" />
-          <field name="production_defense_creatures" />
-        </tree>
-      </field>
-    </record>
+            <field name="name">dungeons buildings list</field>
+            <field name="model">dungeons.buildings</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="image_building" invisible="1"/>
+                    <field name="production_iron"/>
+                    <field name="production_coal"/>
+                    <field name="production_steel"/>
+                    <field name="consume_iron"/>
+                    <field name="consume_coal"/>
+                    <field name="production_magical_creatures"/>
+                    <field name="production_warrior_creatures"/>
+                    <field name="production_defense_creatures"/>
+                </tree>
+            </field>
+        </record>
 
-    <record model="ir.ui.view" id="dungeons.building_type_form_list">
-      <field name="name">dungeons buildings list</field>
-      <field name="model">dungeons.buildings</field>
-      <field name="arch" type="xml">
-        <form>
-          <sheet>
-            <group>
-              <group string="Basic Atributes">
-                <field name="image_building" widget="image" />
-                <field name="name" />
-              </group>
-              <group string="Production Mines">
-                <field name="production_iron" />
-                <field name="production_coal" />
-                <field name="production_steel" />
-              </group>
-              <group string="Consumption Steel Mine">
-                <field name="consume_iron" />
-                <field name="consume_coal" />
-              </group>
-              <group string="Production Buildings">
-                <field name="production_magical_creatures" />
-                <field name="production_warrior_creatures" />
-                <field name="production_defense_creatures" />
-              </group>
-            </group>
-          </sheet>
-        </form>
-      </field>
-    </record>
+        <record model="ir.ui.view" id="dungeons.building_type_form_list">
+            <field name="name">dungeons buildings list</field>
+            <field name="model">dungeons.buildings</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group string="Basic Atributes">
+                                <field name="image_building" widget="image"/>
+                                <field name="name"/>
+                            </group>
+                            <group string="Production Mines">
+                                <field name="production_iron"/>
+                                <field name="production_coal"/>
+                                <field name="production_steel"/>
+                            </group>
+                            <group string="Consumption Steel Mine">
+                                <field name="consume_iron"/>
+                                <field name="consume_coal"/>
+                            </group>
+                            <group string="Production Buildings">
+                                <field name="production_magical_creatures"/>
+                                <field name="production_warrior_creatures"/>
+                                <field name="production_defense_creatures"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="dungeons.building_type_kanban">
+            <field name="name">dungeons building type kanban</field>
+            <field name="model">dungeons.building_type</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="id"/>
+                    <field name="name"/>
+                    <field name="image_building"/>
+                    <field name="production_iron"/>
+                    <field name="production_steel"/>
+                    <field name="consume_iron"/>
+                    <field name="consume_coal"/>
+                    <field name="production_magical_creatures"/>
+                    <field name="production_warrior_creatures"/>
+                    <field name="production_defense_creatures"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_card o_kanban_record_has_image_fill ">
+                                <div class="o_kanban_image_fill_left o_kanban_image_full d-none d-md-block"
+                                     t-attf-style="background-image:url('#{kanban_image('dungeons.building_type',
+                     'image_building', record.id.value, placeholder)}')">
+                                </div>
+
+                                <div class="oe_kanban_details d-flex flex-column">
+                                    <a type="open">
+                                        <h4 class="o_kanban_record_title oe_partner_heading">
+                                            <field name="name"/>
+                                        </h4>
+                                    </a>
+                                    <ul>
+                                        <li>Name:
+                                            <field name="name"/>
+                                        </li>
+                                        <li>Name:
+                                            <field name="name"/>
+                                        </li>
+                                        <li>Production Iron:
+                                            <field name="production_iron"/>
+                                        </li>
+                                        <li>Production Coal:
+                                            <field name="production_coal"/>
+                                        </li>
+                                        <li>Production Steel:
+                                            <field name="production_steel"/>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+     <record model="ir.ui.view" id="dungeons.building_type_search">
+            <field name="name">dungeons building type search</field>
+            <field name="model">dungeons.building_type</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="production_iron"/>
+                    <field name="production_steel"/>
+                    <field name="consume_iron"/>
+                    <field name="consume_coal"/>
+                    <field name="production_magical_creatures"/>
+                    <field name="production_warrior_creatures"/>
+                    <field name="production_defense_creatures"/>
+                      <filter name="coal_productor" string="coal productors" domain="[('production_coal', '>', 0)]"/>
+                    <filter name="iron_productor" string="iron productors" domain="[('production_iron', '>', 0)]"/>
+                </search>
+            </field>
+        </record>
 
     </data>
 </odoo>

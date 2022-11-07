@@ -1,68 +1,72 @@
 <odoo>
-  <data>
-    <!-- explicit list view definition -->
+    <data>
+        <!-- explicit list view definition -->
 
 
-    <!-- actions opening views on models -->
+        <!-- actions opening views on models -->
 
-    <record model="ir.actions.act_window" id="dungeons.action_player_window">
-      <field name="name">Players</field>
-      <field name="res_model">dungeons.player</field>
-      <field name="view_mode">tree,form</field>
-    </record>
-    <record model="ir.actions.act_window" id="dungeons.action_heart_window">
-      <field name="name">Hearts</field>
-      <field name="res_model">dungeons.heart</field>
-      <field name="view_mode">tree,form</field>
-    </record>
-    <record model="ir.actions.act_window" id="dungeons.action_buildings_window">
-      <field name="name">Buildings</field>
-      <field name="res_model">dungeons.buildings</field>
-      <field name="view_mode">tree,form</field>
-    </record>
-    <record model="ir.actions.act_window" id="dungeons.action_building_type_window">
-      <field name="name">Building Types</field>
-      <field name="res_model">dungeons.building_type</field>
-      <field name="view_mode">tree,form</field>
-    </record>
-     <record model="ir.actions.act_window" id="dungeons.action_creature_type_window">
-      <field name="name">Creature Types</field>
-      <field name="res_model">dungeons.creature_type</field>
-      <field name="view_mode">tree,form</field>
-    </record>
+        <record model="ir.actions.act_window" id="dungeons.action_player_window">
+            <field name="name">Players</field>
+            <field name="res_model">dungeons.player</field>
+            <field name="view_mode">kanban,tree,form</field>
+        </record>
+        <record model="ir.actions.act_window" id="dungeons.action_heart_window">
+            <field name="name">Hearts</field>
+            <field name="res_model">dungeons.heart</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <record model="ir.actions.act_window" id="dungeons.action_buildings_window">
+            <field name="name">Buildings</field>
+            <field name="res_model">dungeons.buildings</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <record model="ir.actions.act_window" id="dungeons.action_building_type_window">
+            <field name="name">Building Types</field>
+            <field name="res_model">dungeons.building_type</field>
+            <field name="view_mode">kanban,tree,form</field>
+        </record>
+        <record model="ir.actions.act_window" id="dungeons.action_creature_type_window">
+            <field name="name">Creature Types</field>
+            <field name="res_model">dungeons.creature_type</field>
+            <field name="view_mode">tree,form</field>
+        </record>
 
 
-    <!-- server action to the one above -->
-    <!--
-    <record model="ir.actions.server" id="dungeons.action_server">
-      <field name="name">dungeons server</field>
-      <field name="model_id" ref="model_dungeons_dungeons"/>
-      <field name="state">code</field>
-      <field name="code">
-        action = {
-          "type": "ir.actions.act_window",
-          "view_mode": "tree,form",
-          "res_model": model._name,
-        }
-      </field>
-    </record>
--->
+        <!-- server action to the one above -->
+        <!--
+        <record model="ir.actions.server" id="dungeons.action_server">
+          <field name="name">dungeons server</field>
+          <field name="model_id" ref="model_dungeons_dungeons"/>
+          <field name="state">code</field>
+          <field name="code">
+            action = {
+              "type": "ir.actions.act_window",
+              "view_mode": "tree,form",
+              "res_model": model._name,
+            }
+          </field>
+        </record>
+    -->
 
-    <!-- Top menu item -->
+        <!-- Top menu item -->
 
-    <menuitem name="Dungeons" id="dungeons.menu_root" />
+        <menuitem name="Dungeons" id="dungeons.menu_root"/>
 
-    <!-- menu categories -->
+        <!-- menu categories -->
 
-    <menuitem name="Game" id="dungeons.game" parent="dungeons.menu_root" />
+        <menuitem name="Game" id="dungeons.game" parent="dungeons.menu_root"/>
 
-    <!-- actions -->
+        <!-- actions -->
 
-    <menuitem name="Players" id="dungeons.player_list" parent="dungeons.game" action="dungeons.action_player_window" />
-    <menuitem name="Hearts" id="dungeons.heart_list" parent="dungeons.game" action="dungeons.action_heart_window" />
-    <menuitem name="Buildings" id="dungeons.buildings_list" parent="dungeons.game" action="dungeons.action_buildings_window" />
-    <menuitem name="Building_type" id="dungeons.buildings_type_list" parent="dungeons.game" action="dungeons.action_building_type_window" />
-    <menuitem name="Creature_type" id="dungeons.creature_type_list" parent="dungeons.game" action="dungeons.action_creature_type_window" />
+        <menuitem name="Players" id="dungeons.player_list" parent="dungeons.game"
+                  action="dungeons.action_player_window"/>
+        <menuitem name="Hearts" id="dungeons.heart_list" parent="dungeons.game" action="dungeons.action_heart_window"/>
+        <menuitem name="Buildings" id="dungeons.buildings_list" parent="dungeons.game"
+                  action="dungeons.action_buildings_window"/>
+        <menuitem name="Building_type" id="dungeons.buildings_type_list" parent="dungeons.game"
+                  action="dungeons.action_building_type_window"/>
+        <menuitem name="Creature_type" id="dungeons.creature_type_list" parent="dungeons.game"
+                  action="dungeons.action_creature_type_window"/>
 
-  </data>
+    </data>
 </odoo>
