@@ -10,7 +10,7 @@ class player(models.Model):
     avatar = fields.Image(max_width = 200, max_height = 200) #Atributo avatar que es una imagen y tiene un tamaño predeterminado.
     login = fields.Char()
     password = fields.Char()
-    heart_player = fields.One2many('dungeons.heart', 'player') #Relacion entre jugadores y mazmorras
+    heart_player = fields.One2many(comodel_name='dungeons.heart', inverse_name='player') #Relacion entre jugadores y mazmorras
 
 class heart(models.Model): 
     _name = 'dungeons.heart'
@@ -27,6 +27,7 @@ class heart(models.Model):
     magical_creature = fields.Integer(default = 0)
     warrior_creature = fields.Integer(default = 0)
     buildings = fields.One2many('dungeons.buildings', 'heart')
+
     
 class buildings(models.Model):
     _name = 'dungeons.buildings' 
@@ -51,7 +52,7 @@ class buildings(models.Model):
 class building_type(models.Model):
     _name = 'dungeons.building_type'
     _description = 'Building types'
-     
+
     name = fields.Char(string='type')
     image_building = fields.Image()
     production_iron = fields.Float()
@@ -62,4 +63,16 @@ class building_type(models.Model):
     production_magical_creatures = fields.Float()
     production_warrior_creatures = fields.Float()
     production_defense_creatures = fields.Float()
-   
+    creature_type = fields.One2many('dungeons.creature_type', 'building_type')
+
+
+class creature_type(models.Model):
+    _name = 'dungeons.creature_type'
+    _description = 'Creatures types'
+
+    name = fields.Char(string='Creatures type')
+    image_creature = fields.Image()
+    life = fields.Float()
+    defense = fields.Float()
+    attack = fields.Float()
+    building_type = fields.Many2one('dungeons.building_type', ondelete='set null')

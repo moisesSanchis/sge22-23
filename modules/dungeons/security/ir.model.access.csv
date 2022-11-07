@@ -3,7 +3,7 @@ access_dungeons_player,dungeons.player,model_dungeons_player,base.group_user,1,1
 access_dungeons_heart,dungeons.heart,model_dungeons_heart,base.group_user,1,1,1,1
 access_dungeons_buildings,dungeons.buildings,model_dungeons_buildings,base.group_user,1,1,1,1
 access_dungeons_building_type,dungeons.building_type,model_dungeons_building_type,base.group_user,1,1,1,1
-
+access_dungeons_creature_type,dungeons.creature_type,model_dungeons_creature_type,base.group_user,1,1,1,1
 
 
 
