@@ -21,8 +21,8 @@
         </record>
 
         <record model="ir.ui.view" id="dungeons.building_type_form_list">
-            <field name="name">dungeons buildings list</field>
-            <field name="model">dungeons.buildings</field>
+            <field name="name">dungeons building type list</field>
+            <field name="model">dungeons.building_type</field>
             <field name="arch" type="xml">
                 <form>
                     <sheet>
@@ -80,21 +80,25 @@
                                         </h4>
                                     </a>
                                     <ul>
-                                        <li>Name:
-                                            <field name="name"/>
-                                        </li>
-                                        <li>Name:
-                                            <field name="name"/>
-                                        </li>
-                                        <li>Production Iron:
+                                        <li attrs="{'invisible': [('production_iron', '=', 0)]}">
+                                            <li>Production Iron:
                                             <field name="production_iron"/>
+                                            </li>
+
                                         </li>
-                                        <li>Production Coal:
+                                         <li attrs="{'invisible': [('production_coal', '=', 0)]}">
+                                            <li>Production coal:
                                             <field name="production_coal"/>
+                                            </li>
+
                                         </li>
-                                        <li>Production Steel:
+                                         <li attrs="{'invisible': [('production_steel', '=', 0)]}">
+                                            <li>Production Steel:
                                             <field name="production_steel"/>
+                                            </li>
+
                                         </li>
+
                                     </ul>
                                 </div>
                             </div>
@@ -103,7 +107,7 @@
                 </kanban>
             </field>
         </record>
-     <record model="ir.ui.view" id="dungeons.building_type_search">
+        <record model="ir.ui.view" id="dungeons.building_type_search">
             <field name="name">dungeons building type search</field>
             <field name="model">dungeons.building_type</field>
             <field name="arch" type="xml">
@@ -116,7 +120,7 @@
                     <field name="production_magical_creatures"/>
                     <field name="production_warrior_creatures"/>
                     <field name="production_defense_creatures"/>
-                      <filter name="coal_productor" string="coal productors" domain="[('production_coal', '>', 0)]"/>
+                    <filter name="coal_productor" string="coal productors" domain="[('production_coal', '>', 0)]"/>
                     <filter name="iron_productor" string="iron productors" domain="[('production_iron', '>', 0)]"/>
                 </search>
             </field>
