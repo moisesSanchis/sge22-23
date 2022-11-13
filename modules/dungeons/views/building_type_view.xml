@@ -82,19 +82,37 @@
                                     <ul>
                                         <li attrs="{'invisible': [('production_iron', '=', 0)]}">
                                             <li>Production Iron:
-                                            <field name="production_iron"/>
+                                                <field name="production_iron"/>
                                             </li>
 
                                         </li>
-                                         <li attrs="{'invisible': [('production_coal', '=', 0)]}">
-                                            <li>Production coal:
-                                            <field name="production_coal"/>
+                                        <li attrs="{'invisible': [('production_coal', '=', 0)]}">
+                                            <li>Production Coal:
+                                                <field name="production_coal"/>
                                             </li>
 
                                         </li>
-                                         <li attrs="{'invisible': [('production_steel', '=', 0)]}">
+                                        <li attrs="{'invisible': [('production_steel', '=', 0)]}">
                                             <li>Production Steel:
-                                            <field name="production_steel"/>
+                                                <field name="production_steel"/>
+                                            </li>
+
+                                        </li>
+                                        <li attrs="{'invisible': [('production_magical_creatures', '=', 0)]}">
+                                            <li>Production Magical Creature:
+                                                <field name="production_magical_creatures"/>
+                                            </li>
+
+                                        </li>
+                                        <li attrs="{'invisible': [('production_warrior_creatures', '=', 0)]}">
+                                            <li>Production Warrior Creature:
+                                                <field name="production_warrior_creatures"/>
+                                            </li>
+
+                                        </li>
+                                        <li attrs="{'invisible': [('production_defense_creatures', '=', 0)]}">
+                                            <li>Production Defense Creature:
+                                                <field name="production_defense_creatures"/>
                                             </li>
 
                                         </li>
@@ -122,6 +140,12 @@
                     <field name="production_defense_creatures"/>
                     <filter name="coal_productor" string="coal productors" domain="[('production_coal', '>', 0)]"/>
                     <filter name="iron_productor" string="iron productors" domain="[('production_iron', '>', 0)]"/>
+                    <filter name="production_magical_creatures" string="magical creatures"
+                            domain="[('production_magical_creatures', '=', 1.20)]"/>
+                    <filter name="production_warrior_creatures" string="Warrior creatures"
+                            domain="[('production_warrior_creatures', '=', 1.20)]"/>
+                    <filter name="production_defense_creatures" string="Defense creatures"
+                            domain="[('production_defense_creatures', '=', 1.20)]"/>
                 </search>
             </field>
         </record>

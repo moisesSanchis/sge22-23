@@ -37,19 +37,19 @@ class heart(models.Model):
     def _check_something(self):
         for record in self:
             if record.iron > 3000:
-                raise ValidationError("You have too much iron " % record.iron)
+                raise ValidationError("You have too much iron %s" % record.iron)
 
     @api.constrains('coal')
     def _check_something(self):
         for record in self:
             if record.coal > 3000:
-                raise ValidationError("You have too much coal " % record.coal)
+                raise ValidationError("You have too much coal %s" % record.coal)
 
     @api.constrains('steel')
     def _check_something(self):
         for record in self:
             if record.steel > 3000:
-                raise ValidationError("You have too much steel " % record.steel)
+                raise ValidationError("You have too much steel %s" % record.steel)
 
 
 class buildings(models.Model):
@@ -74,7 +74,7 @@ class buildings(models.Model):
     def check_level(self):
         for record in self:
             if record.level > 15:
-                raise ValidationError("Level cant be more than 15" % record.level)
+                raise ValidationError("Level cant be more than 15 %s" % record.level)
 
 
 class building_type(models.Model):

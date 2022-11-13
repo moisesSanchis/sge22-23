@@ -58,11 +58,7 @@
                                             <field name="name"/>
                                         </h4>
                                     </a>
-                                    <ul>
-                                        <li>Name:
-                                            <field name="name"/>
-                                        </li>
-                                    </ul>
+
                                 </div>
                             </div>
                         </t>
@@ -70,7 +66,7 @@
                 </kanban>
             </field>
         </record>
-         <record model="ir.ui.view" id="dungeons.player_search">
+        <record model="ir.ui.view" id="dungeons.player_search">
             <field name="name">dungeons player search</field>
             <field name="model">dungeons.player</field>
             <field name="arch" type="xml">

@@ -55,6 +55,50 @@
                 </form>
             </field>
         </record>
+        <record model="ir.ui.view" id="dungeons.heart_kanban">
+            <field name="name">dungeons heart kanban</field>
+            <field name="model">dungeons.heart</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="id"/>
+                    <field name="name" />
+                    <field name="player" />
+                    <field name="life" />
+                    <field name="iron" />
+                    <field name="coal" />
+                    <field name="steel" />
+                    <field name="defense_creature" />
+                    <field name="magical_creature" />
+                    <field name="warrior_creature" />
+                    <field name="buildings" />
+                     <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_card o_kanban_record_has_image_fill ">
+                                <div class="o_kanban_image_fill_left o_kanban_image_full d-none d-md-block"
+                                     t-attf-style="background-image:url('#{kanban_image('dungeons.heart',
+                     'avatar_heart', record.id.value, placeholder)}')">
+                                </div>
+
+                                <div class="oe_kanban_details d-flex flex-column">
+                                    <a type="open">
+                                        <h4 class="o_kanban_record_title oe_partner_heading">
+                                            <field name="name"/>
+                                        </h4>
+                                    </a>
+                                    <ul>
+                                        <li>
+                                            <field name="player"/>
+                                             <field name="life"/>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
     </data>
 
 </odoo>
