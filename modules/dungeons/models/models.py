@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
+
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
+
 
 
 class player(models.Model):
@@ -104,3 +106,87 @@ class creature_type(models.Model):
     defense = fields.Float()
     attack = fields.Float()
     building_type = fields.Many2one('dungeons.building_type', ondelete='set null')
+
+
+
+
+class battle(models.Model):
+    _name = 'dungeons.battle'
+    _description = 'Battles'
+
+    name = fields.Char()
+    date_start = fields.Datetime()
+    date_end = fields.Datetime()
+    player1 = fields.Many2one('dungeons.player')
+    player2 = fields.Many2one('dungeons.player')
+    heart1 = fields.Many2one('dungeons.heart')
+    heart2 = fields.Many2one('dungeons.heart')
+    creature1_list = fields.Many2many('dungeons.creatures')
+
+    @api.onchange('player1')
+    def onchange_player1(self):
+        self.name = self.player1.name
+        return {
+            'domain': {
+                'heart1': [('id', 'in', self.player1.hearts.ids)],
+                'heart2': [('id', '!=', self.player1.id)],
+            }
+        }
+
+class creatures(models.Model):
+    _name = 'dungeons.creatures'
+    _description = 'Creatures'
+
+    name = fields.Char()
+    image = fields.Image(max_width=200, max_height=200)
+    life = fields.Float()
+    attack = fields.Float()
+    defense = fields.Float()
+    creation_time = fields.Float(compute='_get_creation_time')
+
+    def _get_creation_time(self):
+        for record in self:
+            record.time = (record.attack + 2*record.life + 2*record.defense)
+
+    def create(self):
+        for s in self:
+            print('Crea',self.env.context['ctx_heart'])
+            heart= self.env['dungeons.heart'].browse(self.env.context['ctx_heart'])
+            creature_type_rel = heart.creatures.filtered(lambda c: c.creature_id.id == s.id)
+            if(len(creature_type_rel)== 0):
+                creature_type_rel = self.env['dungeons.heart_creatures_rel'].create({
+                    "creature_id": s.id,
+                    "heart_id": heart.id,
+                    "qty": 0
+                })
+            self.env['dungeons.heart_creatures_creation'].create({
+                "creature_id": creature_type_rel.id,
+                "progress": 0
+            }) 
+"""
+class heart_creatures_rel(models.Model):
+    _name = 'dungeons.heart_creatures_rel'
+    _description = 'heart_creatures_rel'
+
+    name = fields.Char(related="creatures_id.name")
+    creature_id = fields.Many2one('dungeons.creatures')
+    heart_id = fields.Many2one('dungeons.heart')
+    qty = fields.Integer()
+    creations = fields.One2many('dungeons.heart_creatures_creation', 'creatures_id')
+    creations_queue = fields.Integer(compute="_get_creations_queue")
+    creations_progress = fields.Float(compute="_get_creations_queue")
+
+    def _get_creations_queue(self):
+        for record in self:
+            record.creations_queue = len(record.creations)
+            record.fabrications_progress = record.creations[0].progress
+"""
+"""
+class heart_creatures_creation(models.Model):
+    _name = 'dungeons.heart_creatures_creation'
+    _description = 'Creatures creation model'
+
+    name = fields.Char(related="creatures_id.name")
+    creatures_id = fields.Many2one('dungeons.heart_creatures_rel')
+    progress = fields.Float()
+"""

@@ -15,7 +15,7 @@
             </field>
         </record>
 
-        <record model="ir.ui.view" id="dungeons.creature_type_form_list">
+        <record model="ir.ui.view" id="dungeons.creature_type_form">
             <field name="name">dungeons creatures list</field>
             <field name="model">dungeons.creature_type</field>
             <field name="arch" type="xml">
@@ -24,9 +24,9 @@
                         <group string="Basic Atributes">
                             <field name="image_creature" widget="image"/>
                             <field name="name"/>
-                            <field name="life"/>
-                            <field name="attack"/>
-                            <field name="defense"/>
+                            <field name="life" widget="progressbar"/>
+                            <field name="attack" widget="progressbar"/>
+                            <field name="defense" widget="progressbar"/>
 
                         </group>
                     </sheet>
