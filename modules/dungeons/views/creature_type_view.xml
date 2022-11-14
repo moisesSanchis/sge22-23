@@ -2,37 +2,102 @@
     <data>
 
         <record model="ir.ui.view" id="dungeons.creature_type_tree_list">
-      <field name="name">dungeons creatures list</field>
-      <field name="model">dungeons.creature_type</field>
-      <field name="arch" type="xml">
-        <tree>
-          <field name="name" />
-          <field name="image_creature" invisible="1" />
-          <field name="life"/>
-            <field name="attack"/>
-            <field name="defense"/>
-        </tree>
-      </field>
-    </record>
+            <field name="name">dungeons creatures list</field>
+            <field name="model">dungeons.creature_type</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="image_creature" invisible="1"/>
+                    <field name="life"/>
+                    <field name="attack"/>
+                    <field name="defense"/>
+                </tree>
+            </field>
+        </record>
 
-    <record model="ir.ui.view" id="dungeons.creature_type_form_list">
-      <field name="name">dungeons creatures list</field>
-      <field name="model">dungeons.creature_type</field>
-      <field name="arch" type="xml">
-        <form>
-          <sheet>
-              <group string="Basic Atributes">
-                <field name="image_creature" widget="image" />
-                <field name="name" />
-                  <field name="life" />
-                  <field name="attack"/>
-                <field name="defense" />
+        <record model="ir.ui.view" id="dungeons.creature_type_form_list">
+            <field name="name">dungeons creatures list</field>
+            <field name="model">dungeons.creature_type</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group string="Basic Atributes">
+                            <field name="image_creature" widget="image"/>
+                            <field name="name"/>
+                            <field name="life"/>
+                            <field name="attack"/>
+                            <field name="defense"/>
 
-            </group>
-          </sheet>
-        </form>
-      </field>
-    </record>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="dungeons.creature_type_kanban_list">
+            <field name="name">dungeons creatures kanban list</field>
+            <field name="model">dungeons.creature_type</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="id"/>
+                    <field name="name"/>
+                    <field name="life"/>
+                    <field name="attack"/>
+                    <field name="defense"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_card o_kanban_record_has_image_fill ">
+                                <div class="o_kanban_image_fill_left o_kanban_image_full d-none d-md-block"
+                                     t-attf-style="background-image:url('#{kanban_image('dungeons.creature_type',
+                     'image_creature', record.id.value, placeholder)}')">
+                                </div>
+
+                                <div class="oe_kanban_details d-flex flex-column">
+                                    <a type="open">
+                                        <h4 class="o_kanban_record_title oe_partner_heading">
+                                            <field name="name"/>
+                                        </h4>
+                                    </a>
+                                    <ul>
+                                        <li>
+                                            <field name="name"/>
+                                        </li>
+                                          <li>Life:
+                                            <field name="life"/>
+                                        </li>
+                                        <li attrs="{'invisible': [('attack', '=', 0)]}">
+                                            <li>Attack:
+                                                <field name="attack"/>
+                                            </li>
+                                        </li>
+                                          <li attrs="{'invisible': [('defense', '=', 0)]}">
+                                            <li>Defense:
+                                                <field name="defense"/>
+                                            </li>
+
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+           <record model="ir.ui.view" id="dungeons.creature_type_search_list">
+            <field name="name">dungeons creatures search list</field>
+            <field name="model">dungeons.creature_type</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="life"/>
+                    <filter name="defense" string="Defense"
+                            domain="[('defense', '=', 50)]"/>
+                    <filter name="attack" string="Attack"
+                            domain="[('attack', '>', 0)]"/>
+                </search>
+            </field>
+        </record>
 
     </data>
 </odoo>

@@ -28,7 +28,7 @@
         <record model="ir.actions.act_window" id="dungeons.action_creature_type_window">
             <field name="name">Creature Types</field>
             <field name="res_model">dungeons.creature_type</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">kanban,tree,form</field>
         </record>
 
 

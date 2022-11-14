@@ -1,6 +1,115 @@
 <odoo>
     <data>
 
+        <record id="dungeons.player_demo_1" model="dungeons.player">
+            <field name="name">Carlos</field>
+            <field name="login">almuerzo</field>
+            <field name="password">almuerzoAlmuerzo</field>
+        </record>
+        <record id="dungeons.player_demo_2" model="dungeons.player">
+            <field name="name">Toni</field>
+            <field name="login">loco</field>
+            <field name="password">locoLoco</field>
+        </record>
+        <record id="dungeons.heart_demo_1" model="dungeons.heart">
+            <field name="name">Corazon de Carlos</field>
+            <field name="life">1500</field>
+            <field name="iron">300</field>
+            <field name="coal">500</field>
+            <field name="steel">100</field>
+            <field name="magical_creatures">10</field>
+            <field name="warrior_creatures">20</field>
+            <field name="defense_creatures">30</field>
+            <field name="player" ref="dungeons.player_demo_1"></field>
+        </record>
+        <record id="dungeons.heart_demo_2" model="dungeons.heart">
+            <field name="name">Corazon de Toni</field>
+            <field name="life">1700</field>
+            <field name="iron">200</field>
+            <field name="coal">600</field>
+            <field name="steel">150</field>
+            <field name="magical_creatures">30</field>
+            <field name="warrior_creatures">10</field>
+            <field name="defense_creatures">20</field>
+            <field name="player" ref="dungeons.player_demo_2"></field>
+        </record>
+        <record id="dungeons.heart_demo_3" model="dungeons.heart">
+            <field name="name">Corazon de Carlos</field>
+            <field name="life">1600</field>
+            <field name="iron">100</field>
+            <field name="coal">50</field>
+            <field name="steel">10</field>
+            <field name="magical_creatures">20</field>
+            <field name="warrior_creatures">40</field>
+            <field name="defense_creatures">50</field>
+            <field name="player" ref="dungeons.player_demo_1"></field>
+        </record>
 
+        <record id="dungeons.buildings" model="dungeons.buildings">
+            <field name="name">Criadero demo 1</field>
+            <field name="level">5</field>
+            <field name="heart" ref="dungeons.heart_demo_1"></field>
+            <field name="building_type" ref="dungeons.building_type_hatchery"></field>
+        </record>
+        <record id="dungeons.buildings" model="dungeons.buildings">
+            <field name="name">Criadero demo 2</field>
+            <field name="level">7</field>
+            <field name="heart" ref="dungeons.heart_demo_2"></field>
+            <field name="building_type" ref="dungeons.building_type_hatchery"></field>
+        </record>
+        <record id="dungeons.buildings" model="dungeons.buildings">
+            <field name="name">Criadero demo 3</field>
+            <field name="level">2</field>
+            <field name="heart" ref="dungeons.heart_demo_3"></field>
+            <field name="building_type" ref="dungeons.building_type_hatchery"></field>
+        </record>
+         <record id="dungeons.buildings" model="dungeons.buildings">
+            <field name="name">Mina de carbon demo 1</field>
+            <field name="level">6</field>
+            <field name="heart" ref="dungeons.heart_demo_1"></field>
+            <field name="building_type" ref="dungeons.building_type_coalmine"></field>
+        </record>
+        <record id="dungeons.buildings" model="dungeons.buildings">
+            <field name="name">Mina de carbon demo 2</field>
+            <field name="level">9</field>
+            <field name="heart" ref="dungeons.heart_demo_2"></field>
+            <field name="building_type" ref="dungeons.building_type_coalmine"></field>
+        </record>
+        <record id="dungeons.buildings" model="dungeons.buildings">
+            <field name="name">Mina de carbon demo 3</field>
+            <field name="level">14</field>
+            <field name="heart" ref="dungeons.heart_demo_3"></field>
+            <field name="building_type" ref="dungeons.building_type_coalmine"></field>
+        </record>
+        <record id="dungeons.buildings" model="dungeons.buildings">
+            <field name="name">Mina de hierro demo 1</field>
+            <field name="level">11</field>
+            <field name="heart" ref="dungeons.heart_demo_1"></field>
+            <field name="building_type" ref="dungeons.building_type_ironmine"></field>
+        </record>
+        <record id="dungeons.buildings" model="dungeons.buildings">
+            <field name="name">Mina de hierro demo 2</field>
+            <field name="level">1</field>
+            <field name="heart" ref="dungeons.heart_demo_2"></field>
+            <field name="building_type" ref="dungeons.building_type_ironmine"></field>
+        </record>
+        <record id="dungeons.buildings" model="dungeons.buildings">
+            <field name="name">Mina de hierro demo 3</field>
+            <field name="level">7</field>
+            <field name="heart" ref="dungeons.heart_demo_3"></field>
+            <field name="building_type" ref="dungeons.building_type_ironmine"></field>
+        </record>
+        <record id="dungeons.buildings" model="dungeons.buildings">
+            <field name="name">Forja demo 1</field>
+            <field name="level">2</field>
+            <field name="heart" ref="dungeons.heart_demo_1"></field>
+            <field name="building_type" ref="dungeons.building_type_forge"></field>
+        </record>
+         <record id="dungeons.buildings" model="dungeons.buildings">
+            <field name="name">Forja demo 2</field>
+            <field name="level">4</field>
+            <field name="heart" ref="dungeons.heart_demo_3"></field>
+            <field name="building_type" ref="dungeons.building_type_forge"></field>
+        </record>
     </data>
 </odoo>

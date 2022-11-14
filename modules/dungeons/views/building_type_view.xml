@@ -3,9 +3,10 @@
 
         <record model="ir.ui.view" id="dungeons.building_type_tree_list">
             <field name="name">dungeons buildings list</field>
-            <field name="model">dungeons.buildings</field>
+            <field name="model">dungeons.building_type</field>
             <field name="arch" type="xml">
-                <tree>
+                <tree decoration-success="production_coal &gt; 0.0" decoration-info="production_iron &gt; 0.0"
+                 decoration-warning="production_steel &gt; 0.0" decoration-primary="production_magical_creatures &gt; 0.0">
                     <field name="name"/>
                     <field name="image_building" invisible="1"/>
                     <field name="production_iron"/>
