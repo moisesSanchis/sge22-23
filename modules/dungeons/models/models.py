@@ -143,50 +143,14 @@ class creatures(models.Model):
     attack = fields.Float()
     defense = fields.Float()
     creation_time = fields.Float(compute='_get_creation_time')
+    heart = fields.Many2one('dungeons.heart')
+    creature_type = fields.Many2one('dungeons.creature_type')
+
 
     def _get_creation_time(self):
-        for record in self:
-            record.time = (record.attack + 2*record.life + 2*record.defense)
+        for creatures in self:
+            creatures.creation_time = (creatures.attack + 2*creatures.life + creatures.defense)
 
-    def create(self):
-        for s in self:
-            print('Crea',self.env.context['ctx_heart'])
-            heart= self.env['dungeons.heart'].browse(self.env.context['ctx_heart'])
-            creature_type_rel = heart.creatures.filtered(lambda c: c.creature_id.id == s.id)
-            if(len(creature_type_rel)== 0):
-                creature_type_rel = self.env['dungeons.heart_creatures_rel'].create({
-                    "creature_id": s.id,
-                    "heart_id": heart.id,
-                    "qty": 0
-                })
-            self.env['dungeons.heart_creatures_creation'].create({
-                "creature_id": creature_type_rel.id,
-                "progress": 0
-            }) 
-"""
-class heart_creatures_rel(models.Model):
-    _name = 'dungeons.heart_creatures_rel'
-    _description = 'heart_creatures_rel'
-
-    name = fields.Char(related="creatures_id.name")
-    creature_id = fields.Many2one('dungeons.creatures')
-    heart_id = fields.Many2one('dungeons.heart')
-    qty = fields.Integer()
-    creations = fields.One2many('dungeons.heart_creatures_creation', 'creatures_id')
-    creations_queue = fields.Integer(compute="_get_creations_queue")
-    creations_progress = fields.Float(compute="_get_creations_queue")
-
-    def _get_creations_queue(self):
-        for record in self:
-            record.creations_queue = len(record.creations)
-            record.fabrications_progress = record.creations[0].progress
-"""
-"""
-class heart_creatures_creation(models.Model):
-    _name = 'dungeons.heart_creatures_creation'
-    _description = 'Creatures creation model'
-
-    name = fields.Char(related="creatures_id.name")
-    creatures_id = fields.Many2one('dungeons.heart_creatures_rel')
-    progress = fields.Float()
-"""
+    def create_creature(self):
+        for creatures in self:
+            print('funciona')
