@@ -5,16 +5,16 @@
             <field name="model">dungeons.heart</field>
             <field name="arch" type="xml">
                 <tree>
-                    <field name="name" />
-                    <field name="player" />
-                    <field name="life" />
-                    <field name="iron" />
-                    <field name="coal" />
-                    <field name="steel" />
-                    <field name="defense_creature" />
-                    <field name="magical_creature" />
-                    <field name="warrior_creature" />
-                    <field name="buildings" />
+                    <field name="name"/>
+                    <field name="player"/>
+                    <field name="life"/>
+                    <field name="iron"/>
+                    <field name="coal"/>
+                    <field name="steel"/>
+                    <field name="defense_creature"/>
+                    <field name="magical_creature"/>
+                    <field name="warrior_creature"/>
+                    <field name="buildings"/>
                 </tree>
             </field>
         </record>
@@ -27,29 +27,70 @@
                     <sheet>
                         <group>
                             <group string="Basic Atributes">
-                                <field name="avatar_heart" widget="image" />
-                                <field name="name" />
-                                <field name="life" />
+                                <field name="avatar_heart" widget="image"/>
+                                <field name="name"/>
+                                <field name="life"/>
                             </group>
-                            <group string="Mines">
-                                <field name="iron" />
-                                <field name="coal" />
-                                <field name="steel" />
-                            </group>
-                            <group string="Creatures">
-                                <field name="defense_creature" />
-                                <field name="magical_creature" />
-                                <field name="warrior_creature" />
-                            </group>
-                            <group string="Buildings">
-                                <field name="buildings" mode="tree">
-                                    <tree>
-                                        <field name="name" />
-                                        <field name="level" />
-                                        <field name="building_type" />
-                                    </tree>
-                                </field>
-                            </group>
+                            <notebook>
+                                <page string="mine">
+                                    <group string="Mines">
+                                        <field name="iron"/>
+                                        <field name="coal"/>
+                                        <field name="steel"/>
+                                    </group>
+                                </page>
+
+                                <page string="creatures">
+                                    <group string="Creatures">
+                                        <field name="defense_creature"/>
+                                        <field name="magical_creature"/>
+                                        <field name="warrior_creature"/>
+                                    </group>
+                                </page>
+                                <page string="buildings">
+                                    <group string="Buildings">
+                                        <field name="buildings" mode="kanban">
+                                <kanban>
+                                    <field name="id"/>
+                                    <field name="image_building"/>
+                                    <field name="name"/>
+
+                                    <templates>
+                                        <t t-name="kanban-box">
+                                            <div t-attf-class="oe_kanban_card o_kanban_record_has_image_fill ">
+                                                <div class="o_kanban_image_fill_left o_kanban_image_full d-none d-md-block"
+                                                     t-attf-style="background-image:url('#{kanban_image('dungeons.buildings',
+                     'image_building', record.id.value, placeholder)}')">
+                                                </div>
+
+                                                <div class="oe_kanban_details d-flex flex-column">
+                                                    <a type="open">
+                                                        <h4 class="o_kanban_record_title oe_partner_heading">
+                                                            <field name="name"/>
+                                                        </h4>
+                                                    </a>
+
+                                                </div>
+                                                <div class="oe_kanban_details d-flex flex-column">
+                                                    <button name="create_building"
+                                                            type="object"
+                                                            string="Create"
+                                                            class="btn btn-primary"
+                                                            context="{'ctx_heart':parent.id}"
+                                                    >Create</button>
+                                                </div>
+                                            </div>
+
+                                        </t>
+                                    </templates>
+                                </kanban>
+
+                            </field>
+
+                                    </group>
+                                </page>
+                            </notebook>
+
                         </group>
                     </sheet>
                 </form>
@@ -61,17 +102,17 @@
             <field name="arch" type="xml">
                 <kanban>
                     <field name="id"/>
-                    <field name="name" />
-                    <field name="player" />
-                    <field name="life" />
-                    <field name="iron" />
-                    <field name="coal" />
-                    <field name="steel" />
-                    <field name="defense_creature" />
-                    <field name="magical_creature" />
-                    <field name="warrior_creature" />
-                    <field name="buildings" />
-                     <templates>
+                    <field name="name"/>
+                    <field name="player"/>
+                    <field name="life"/>
+                    <field name="iron"/>
+                    <field name="coal"/>
+                    <field name="steel"/>
+                    <field name="defense_creature"/>
+                    <field name="magical_creature"/>
+                    <field name="warrior_creature"/>
+                    <field name="buildings"/>
+                    <templates>
                         <t t-name="kanban-box">
                             <div t-attf-class="oe_kanban_card o_kanban_record_has_image_fill ">
                                 <div class="o_kanban_image_fill_left o_kanban_image_full d-none d-md-block"
@@ -88,7 +129,7 @@
                                     <ul>
                                         <li>
                                             <field name="player"/>
-                                             <field name="life"/>
+                                            <field name="life"/>
                                         </li>
 
                                     </ul>
@@ -99,22 +140,22 @@
                 </kanban>
             </field>
         </record>
-          <record model="ir.ui.view" id="dungeons.heart_search_list">
+        <record model="ir.ui.view" id="dungeons.heart_search_list">
             <field name="name">dungeons heart search list</field>
             <field name="model">dungeons.heart</field>
             <field name="arch" type="xml">
                 <search>
-                    <field name="name" />
-                    <field name="player" />
-                    <field name="life" />
-                    <field name="iron" />
-                    <field name="coal" />
-                    <field name="steel" />
-                    <field name="defense_creature" />
-                    <field name="magical_creature" />
-                    <field name="warrior_creature" />
-                    <field name="buildings" />
-                     <filter name="group_by_player" string="Group by Player" context="{'group_by': 'player'}"/>
+                    <field name="name"/>
+                    <field name="player"/>
+                    <field name="life"/>
+                    <field name="iron"/>
+                    <field name="coal"/>
+                    <field name="steel"/>
+                    <field name="defense_creature"/>
+                    <field name="magical_creature"/>
+                    <field name="warrior_creature"/>
+                    <field name="buildings"/>
+                    <filter name="group_by_player" string="Group by Player" context="{'group_by': 'player'}"/>
                 </search>
             </field>
         </record>

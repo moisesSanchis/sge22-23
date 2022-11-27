@@ -53,6 +53,27 @@ class heart(models.Model):
             if record.steel > 3000:
                 raise ValidationError("You have too much steel %s" % record.steel)
 
+class heart_buildings_rel(models.Model): #Arreglar
+    _name = 'dungeons.heart_buildings_rel'
+    _description = 'heart_buildings_rel'
+
+    name = fields.Char(related="buildings_building_type")
+    buildings_id = fields.Many2one('dungeons.buildings')
+    heart_id = fields.Many2one('dungeons.heart')
+    quantity = fields.Integer()
+    creations = fields.One2many('dungeons.heart', 'buildings_id')
+    creations_queue = fields.Integer(compute="_get_creations_queue")
+    creation_progress = fields.Float(compute="_get_creations_queue")
+
+    def _get_creation_queue(self):
+        for record in self:
+            record.creations_queue = len(record.creations)
+            record.creation_progress = 0
+            if(record.creations_queue>=1):
+                record.creation_progress = record.creations[0].progress
+
+                #falta añadirlo a la battalla.
+
 
 class buildings(models.Model):
     _name = 'dungeons.buildings'
@@ -77,6 +98,10 @@ class buildings(models.Model):
         for record in self:
             if record.level > 15:
                 raise ValidationError("Level cant be more than 15 %s" % record.level)
+
+    def create_building(self):
+        for buildings in self:
+            print('funciona')
 
 
 class building_type(models.Model):
@@ -154,3 +179,5 @@ class creatures(models.Model):
     def create_creature(self):
         for creatures in self:
             print('funciona')
+
+
