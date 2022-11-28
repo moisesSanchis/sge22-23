@@ -77,7 +77,7 @@
                                                             string="Create"
                                                             class="btn btn-primary"
                                                             context="{'ctx_heart':parent.id}"
-                                                    >Create</button>
+                                                    >Build</button>
                                                 </div>
                                             </div>
 
