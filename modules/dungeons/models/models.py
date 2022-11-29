@@ -30,12 +30,19 @@ class heart(models.Model):
     iron = fields.Integer(default=100)
     coal = fields.Integer(default=50)
     steel = fields.Integer(default=10)
-    gold = fields.Integer(default=1000)
+    gold = fields.Float(default=1000)
     defense_creature = fields.Integer(default=0)
     magical_creature = fields.Integer(default=0)
     warrior_creature = fields.Integer(default=0)
     buildings = fields.One2many('dungeons.buildings', 'heart')
     creatures = fields.One2many('dungeons.creatures', 'heart')
+    available_buildings = fields.Many2many('dungeons.building_type', compute="_get_available_buildings")
+
+    @api.depends('gold')
+    def _get_available_buildings(self):
+        for c in self:
+            c.available_buildings = self.env['dungeons.building_type'].search([('gold_cost_base', '<=', c.gold)])
+            print(c)
 
     @api.constrains('iron')
     def _check_something(self):
@@ -108,7 +115,8 @@ class building_type(models.Model):
             if heart.gold > building_type.gold_cost_base:
                 gold = heart.gold - building_type.gold_cost_base
                 building = self.env['dungeons.building_type'].create({
-
+                    "heart_id":record.id,
+                    "building_type_id":heart.id
                 })
 
 

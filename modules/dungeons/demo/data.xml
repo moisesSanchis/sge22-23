@@ -4,6 +4,7 @@
         <record id="dungeons.building_type_coalmine" model="dungeons.building_type">
             <field name="name">Mina de Carbon</field>
             <field name="production_coal">1.5</field>
+            <field name="gold_cost_base">100</field>
             <field name="image_building">/9j/4AAQSkZJRgABAQEASABIAAD/4ReERXhpZgAASUkqAAgAAAAIABIBAwABAAAAAQAAABoBBQAB
 AAAAbgAAABsBBQABAAAAdgAAACgBAwABAAAAAgAAADEBAgANAAAAfgAAADIBAgAUAAAAjAAAABMC
 AwABAAAAAQAAAGmHBAABAAAAoAAAAO4AAABIAAAAAQAAAEgAAAABAAAAR0lNUCAyLjEwLjE4AAAy
@@ -381,6 +382,7 @@ J//Z</field>
             <field name="production_defense_creatures">1.2</field>
             <field name="production_magical_creatures">1.2</field>
             <field name="production_warrior_creatures">1.2</field>
+              <field name="gold_cost_base">100</field>
             <field name="image_building">/9j/4AAQSkZJRgABAQIAHAAcAAD/4Q2CRXhpZgAASUkqAAgAAAAGABoBBQABAAAAVgAAABsBBQAB
 AAAAXgAAACgBAwABAAAAAwAAADEBAgANAAAAZgAAADIBAgAUAAAAdAAAAGmHBAABAAAAiAAAAJoA
 AAAcAAAAAQAAABwAAAABAAAAR0lNUCAyLjEwLjE4AAAyMDIyOjEwOjI0IDA5OjU2OjUzAAEAAaAD
@@ -524,6 +526,7 @@ Lhw4ddddddddddcOHXXLl1y66666665cuXLlw4cOHXXXXXXXXXXXXXXXXXXXXXXXXLly5cuHDhw6
         <record id="dungeons.building_type_ironmine" model="dungeons.building_type">
             <field name="name">Mina de Hierro</field>
             <field name="production_iron">1.5</field>
+              <field name="gold_cost_base">50</field>
             <field name="image_building">/9j/4AAQSkZJRgABAQIAJQAlAAD/4RYKRXhpZgAASUkqAAgAAAAGABoBBQABAAAAVgAAABsBBQAB
 AAAAXgAAACgBAwABAAAAAwAAADEBAgANAAAAZgAAADIBAgAUAAAAdAAAAGmHBAABAAAAiAAAAJoA
 AAAlAAAAAQAAACUAAAABAAAAR0lNUCAyLjEwLjE4AAAyMDIyOjEwOjI0IDIyOjA5OjI4AAEAAaAD
@@ -891,6 +894,7 @@ VtRAW8xdBUTJ4i0H3AjglN84lMACckuOHL5ZmDGd8cTLHczIquUwcsIaa1A5mvode/CbyXhH4ait
         <record id="dungeons.building_type_forge" model="dungeons.building_type">
             <field name="name">Forja</field>
             <field name="production_steel">1.5</field>
+              <field name="gold_cost_base">40</field>
             <field name="image_building">/9j/4AAQSkZJRgABAQEASABIAAD/4RaaRXhpZgAASUkqAAgAAAAIABIBAwABAAAAAQAAABoBBQAB
 AAAAbgAAABsBBQABAAAAdgAAACgBAwABAAAAAgAAADEBAgANAAAAfgAAADIBAgAUAAAAjAAAABMC
 AwABAAAAAQAAAGmHBAABAAAAoAAAAO4AAABIAAAAAQAAAEgAAAABAAAAR0lNUCAyLjEwLjE4AAAy

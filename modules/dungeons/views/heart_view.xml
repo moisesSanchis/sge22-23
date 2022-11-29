@@ -30,6 +30,7 @@
                                 <field name="avatar_heart" widget="image"/>
                                 <field name="name"/>
                                 <field name="life"/>
+                                <field name="gold"/>
                             </group>
                             <notebook>
                                 <page string="mine">
@@ -49,7 +50,7 @@
                                 </page>
                                 <page string="buildings">
                                     <group string="Buildings">
-                                        <field name="buildings" mode="kanban">
+                                        <field name="available_buildings" mode="kanban">
                                 <kanban>
                                     <field name="id"/>
                                     <field name="image_building"/>
@@ -59,7 +60,7 @@
                                         <t t-name="kanban-box">
                                             <div t-attf-class="oe_kanban_card o_kanban_record_has_image_fill ">
                                                 <div class="o_kanban_image_fill_left o_kanban_image_full d-none d-md-block"
-                                                     t-attf-style="background-image:url('#{kanban_image('dungeons.buildings',
+                                                     t-attf-style="background-image:url('#{kanban_image('dungeons.building_type',
                      'image_building', record.id.value, placeholder)}')">
                                                 </div>
 
