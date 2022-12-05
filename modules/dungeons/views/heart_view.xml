@@ -50,6 +50,40 @@
                                 </page>
                                 <page string="buildings">
                                     <group string="Buildings">
+                                        <!--Primer Kanban-->
+                                     <field name="buildings" mode="kanban">
+                                <kanban>
+                                    <field name="id"/>
+                                    <field name="image_building"/>
+                                    <field name="building_type"/>
+                                    <field name ="level"/>
+                                    <templates>
+                                        <t t-name="kanban-box">
+                                            <div t-attf-class="oe_kanban_card o_kanban_record_has_image_fill ">
+                                                <div class="o_kanban_image_fill_left o_kanban_image_full d-none d-md-block"
+                                                     t-attf-style="background-image:url('#{kanban_image('dungeons.buildings',
+                     'image_building', record.id.value, placeholder)}')">
+                                                </div>
+
+                                                <div class="oe_kanban_details d-flex flex-column">
+                                                    <a type="open">
+                                                        <h4 class="o_kanban_record_title oe_partner_heading">
+                                                            <field name="building_type"/>
+                                                        </h4>
+                                                    </a>
+
+                                                </div>
+                                                <div class="oe_kanban_details d-flex flex-column">
+                                                    Level: <field name ="level"/>
+                                                </div>
+                                            </div>
+
+                                        </t>
+                                    </templates>
+                                </kanban>
+
+                            </field>
+                                        <!--Segundo Kanban-->
                                         <field name="available_buildings" mode="kanban">
                                 <kanban>
                                     <field name="id"/>

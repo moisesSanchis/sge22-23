@@ -379,9 +379,9 @@ J//Z</field>
         </record>
         <record id="dungeons.building_type_hatchery" model="dungeons.building_type">
             <field name="name">Criadero</field>
-            <field name="production_defense_creatures">1.2</field>
-            <field name="production_magical_creatures">1.2</field>
-            <field name="production_warrior_creatures">1.2</field>
+            <field name="production_defense_creatures">1</field>
+            <field name="production_magical_creatures">1</field>
+            <field name="production_warrior_creatures">1</field>
               <field name="gold_cost_base">100</field>
             <field name="image_building">/9j/4AAQSkZJRgABAQIAHAAcAAD/4Q2CRXhpZgAASUkqAAgAAAAGABoBBQABAAAAVgAAABsBBQAB
 AAAAXgAAACgBAwABAAAAAwAAADEBAgANAAAAZgAAADIBAgAUAAAAdAAAAGmHBAABAAAAiAAAAJoA

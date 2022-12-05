@@ -12,8 +12,6 @@
                     <field name="production_iron"/>
                     <field name="production_coal"/>
                     <field name="production_steel"/>
-                    <field name="consume_iron"/>
-                    <field name="consume_coal"/>
                     <field name="production_magical_creatures"/>
                     <field name="production_warrior_creatures"/>
                     <field name="production_defense_creatures"/>
@@ -40,12 +38,6 @@
                                 <field name="production_steel"/>
                             </group>
                                 </page>
-                                <page string="consumes">
-                            <group string="Consumption Steel Mine">
-                                <field name="consume_iron"/>
-                                <field name="consume_coal"/>
-                            </group>
-                                </page>
                                 <page string="production buildings">
                             <group string="Production Buildings">
                                 <field name="production_magical_creatures"/>
@@ -69,8 +61,6 @@
                     <field name="image_building"/>
                     <field name="production_iron"/>
                     <field name="production_steel"/>
-                    <field name="consume_iron"/>
-                    <field name="consume_coal"/>
                     <field name="production_magical_creatures"/>
                     <field name="production_warrior_creatures"/>
                     <field name="production_defense_creatures"/>
@@ -142,8 +132,6 @@
                     <field name="name"/>
                     <field name="production_iron"/>
                     <field name="production_steel"/>
-                    <field name="consume_iron"/>
-                    <field name="consume_coal"/>
                     <field name="production_magical_creatures"/>
                     <field name="production_warrior_creatures"/>
                     <field name="production_defense_creatures"/>
