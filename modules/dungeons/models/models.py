@@ -3,7 +3,8 @@
 
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
-
+import random
+from datetime import datetime, timedelta
 
 
 class player(models.Model):
@@ -31,28 +32,29 @@ class heart(models.Model):
     coal = fields.Integer(default=50)
     steel = fields.Integer(default=10)
     gold = fields.Float(default=1000)
+    location = fields.Integer(default=random.randint(1, 999))#distancia random
     defense_creature = fields.Integer(default=0)
     magical_creature = fields.Integer(default=0)
     warrior_creature = fields.Integer(default=0)
     buildings = fields.One2many('dungeons.buildings', 'heart')
     creatures = fields.One2many('dungeons.creatures', 'heart')
-    available_buildings = fields.Many2many('dungeons.building_type', compute="_get_available_buildings")
+    available_buildings = fields.Many2many('dungeons.building_type', compute="_get_available_buildings") #Edificios disponibles.
 
     production_coal = fields.Float(compute='_get_total_productions')
     production_iron = fields.Float(compute='_get_total_productions')
     production_steel = fields.Float(compute='_get_total_productions')
-    production_magical_creatures= fields.Float(compute='_get_total_productions')
+    production_magical_creatures = fields.Float(compute='_get_total_productions')
     production_warrior_creatures = fields.Float(compute='_get_total_productions')
-    production_defense_creatures= fields.Float(compute='_get_total_productions')
+    production_defense_creatures = fields.Float(compute='_get_total_productions')
 
 
-    @api.depends('gold')
+    @api.depends('gold') #Funcion para mostrar los edificios segun el oro disponible.
     def _get_available_buildings(self):
         for c in self:
             c.available_buildings = self.env['dungeons.building_type'].search([('gold_cost_base', '<=', c.gold)])
 
 
-    @api.constrains('iron')
+    @api.constrains('iron') #funcion para restringir la cantidad de hierro que se puede tener.
     def _check_something(self):
         for record in self:
             if record.iron > 3000:
@@ -70,7 +72,7 @@ class heart(models.Model):
             if record.steel > 3000:
                 raise ValidationError("You have too much steel %s" % record.steel)
 
-    @api.depends('buildings')
+    @api.depends('buildings') #Funcion para sumar al heart las producciones de todos los edificios.
     def _get_total_productions(self):
         for h in self:
             h.production_coal = sum(h.buildings.mapped('production_coal'))
@@ -103,6 +105,12 @@ class heart(models.Model):
 
             })
 
+    def distance(self, other_heart): # Define la distancia entre un heart y otro
+        distance = 0
+        if len(self) > 0 and len(other_heart) > 0:
+          distance = abs(self.location - other_heart.location)
+        return distance
+
 class buildings(models.Model):
     _name = 'dungeons.buildings'
     _description = 'Buildings'
@@ -129,8 +137,6 @@ class buildings(models.Model):
     def _get_productions(self):
         for b in self:
             level = b.level
-            # Expected productions
-
             # Expected productions
             production_coal = b.building_type.production_coal * level
             production_iron = b.building_type.production_iron * level
@@ -210,6 +216,7 @@ class creatures(models.Model):
     life = fields.Float()
     attack = fields.Float()
     defense = fields.Float()
+    speed = fields.Float(deafult=5)
     creation_time = fields.Float(compute='_get_creation_time')
     heart = fields.Many2one('dungeons.heart')
     creature_type = fields.Many2one('dungeons.creature_type')
@@ -217,4 +224,128 @@ class creatures(models.Model):
 
 
 
+class battle(models.Model): #falta terminar
+    _name = 'dungeons.battle'
+    _description = 'Battles'
 
+    name = fields.Char()
+    date_start = fields.Datetime(readonly=True, default=fields.Datetime.now)
+    date_end = fields.Datetime()#compute='_get_time')
+    time = fields.Float()#compute='_get_time')
+    distance = fields.Float()#compute='_get_time')
+    progress = fields.Float()
+    state = fields.Selection([('1', 'Preparation'), ('2', 'Send'), ('3', 'Finished')], default='1')
+    player1 = fields.Many2one('dungeons.player')
+    player2 = fields.Many2one('dungeons.player')
+    heart1 = fields.Many2one('dungeons.heart')
+    heart2 = fields.Many2one('dungeons.heart')
+    creatures1_list = fields.One2many('dungeons.battle_creatures_rel', 'battle_id')
+    creatures1_available = fields.Many2many('dungeons.heart_creatures_rel')#, compute='_get_creatures_available')
+    total_power = fields.Float()  # ORM Mapped
+    winner = fields.Many2one()
+    draft = fields.Boolean()
+
+  #  @api.depends('creatures1_list', 'heart2', 'heart1')
+    def _get_time(self):
+        for b in self:
+            b.time = 0
+            b.distance = 0
+            b.date_end = fields.Datetime.now()
+            if len(b.heart1) > 0 and len(b.heart2) > 0 and len(b.creatures1_list) > 0 and len(
+                    b.creatures1_list.creatures_id) > 0:
+                b.distance = b.heart1.distance(b.heart2)
+                min_speed = b.creatures1_list.creatures_id.sorted(lambda s: s.speed).mapped('speed')[0]
+                b.time = b.distance / min_speed
+                b.date_end = fields.Datetime.to_string(
+                    fields.Datetime.from_string(b.date_start) + timedelta(minutes=b.time))
+
+
+   # @api.onchange('player1')
+    def onchange_player1(self):
+        print(self)
+        if len(self.player1) > 0:
+            self.name = self.player1.name
+            return {
+                'domain': {
+                    'heart1': [('id', 'in', self.player1.heart_player.ids)],
+                    'player2': [('id', '!=', self.player1.id)],
+                }
+            }
+
+
+   # @api.onchange('player2')
+    def onchange_player2(self):
+        print(self)
+        if len(self.player2) > 0:
+            return {
+                'domain': {
+                    'heart2': [('id', 'in', self.player2.heart_player.ids)],
+                    'player1': [('id', '!=', self.player2.id)],
+                }
+            }
+
+
+
+  #  @api.depends('heart1')
+    def _get_creatures_available(self):
+        print(self)
+        for b in self:
+            b.creatures1_available = b.heart1.creatures.ids
+
+    def launch_battle(self):
+        print(self)
+        for b in self:
+            if len(b.heart1) == 1 and len(b.heart2) == 1 and len(b.cretures_list) > 0 and b.state == '1':
+
+                b.date_start = fields.Datetime.now()
+                b.progress = 0
+                for s in b.creatures1_list:
+                    creatures_available = \
+                        b.creatures1_available.filtered(lambda s_a: s_a.creatures_id.id == s.creatures_id.id)[0]
+                    creatures_available.qty -= s.qty
+                b.state = '2'
+
+    def back(self):
+        print(self)
+        for b in self:
+            if b.state == '2':
+                b.state = '1'
+
+
+class battle_creatures_rel(models.Model):
+    _name = 'dungeons.battle_creatures_rel'
+    _description = 'battle_creatures_rel'
+
+    name = fields.Char(related="creatures_id.name")
+    creatures_id = fields.Many2one('dungeons.creatures')
+    battle_id = fields.Many2one('dungeons.battle')
+    qty = fields.Integer()
+
+
+
+
+class heart_creatures_rel(models.Model):
+    _name = 'dungeons.heart_creatures_rel'
+    _description = 'heart_creatures_rel'
+
+    name = fields.Char(related="creatures_id.name")
+    creatures_id = fields.Many2one('dungeons.creatures')
+    heart_id = fields.Many2one('dungeons.heart')
+    qty = fields.Integer()
+
+
+    def add_to_battle(self):  # ORM
+        for c in self:
+            if (c.qty > 0):
+                battle_id = self.env['dungeons.battle'].browse(self.env.context['ctx_battle'])[0]
+                current_creatures = battle_id.creatures1_list.filtered(
+                    lambda s: s.creatures_id.id == c.creatures_id.id)
+                if len(current_creatures) == 0:
+                    current_creatures = self.env['dungeons.battle_creatures_rel'].create({
+                        "creatures_id": c.creatures_id.id,
+                        "battle_id": battle_id.id,
+                        "qty": 0
+                    })
+                if current_creatures.qty < c.qty:
+                    current_creatures.qty += 1
+                # c.qty -= 1
