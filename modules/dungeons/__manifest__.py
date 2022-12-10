@@ -30,6 +30,7 @@
         'views/building_view.xml',
         'views/building_type_view.xml',
         'views/creature_type_view.xml',
+        'views/battle_view.xml',
         'views/views.xml',
         'views/templates.xml',
         'demo/data.xml',

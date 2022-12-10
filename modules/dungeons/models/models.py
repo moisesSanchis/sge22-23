@@ -55,19 +55,19 @@ class heart(models.Model):
 
 
     @api.constrains('iron') #funcion para restringir la cantidad de hierro que se puede tener.
-    def _check_something(self):
+    def _check_iron(self):
         for record in self:
             if record.iron > 3000:
                 raise ValidationError("You have too much iron %s" % record.iron)
 
     @api.constrains('coal')
-    def _check_something(self):
+    def _check_coal(self):
         for record in self:
             if record.coal > 3000:
                 raise ValidationError("You have too much coal %s" % record.coal)
 
     @api.constrains('steel')
-    def _check_something(self):
+    def _check_steel(self):
         for record in self:
             if record.steel > 3000:
                 raise ValidationError("You have too much steel %s" % record.steel)
@@ -229,10 +229,11 @@ class battle(models.Model): #falta terminar
     _description = 'Battles'
 
     name = fields.Char()
+    image_battle = fields.Image(max_width=200, max_height=200)
     date_start = fields.Datetime(readonly=True, default=fields.Datetime.now)
-    date_end = fields.Datetime()#compute='_get_time')
-    time = fields.Float()#compute='_get_time')
-    distance = fields.Float()#compute='_get_time')
+    date_end = fields.Datetime(compute='_get_time')
+    time = fields.Float(compute='_get_time')
+    distance = fields.Float(compute='_get_time')
     progress = fields.Float()
     state = fields.Selection([('1', 'Preparation'), ('2', 'Send'), ('3', 'Finished')], default='1')
     player1 = fields.Many2one('dungeons.player')
@@ -242,10 +243,10 @@ class battle(models.Model): #falta terminar
     creatures1_list = fields.One2many('dungeons.battle_creatures_rel', 'battle_id')
     creatures1_available = fields.Many2many('dungeons.heart_creatures_rel')#, compute='_get_creatures_available')
     total_power = fields.Float()  # ORM Mapped
-    winner = fields.Many2one()
+   # winner = fields.Many2one()
     draft = fields.Boolean()
 
-  #  @api.depends('creatures1_list', 'heart2', 'heart1')
+    @api.depends('creatures1_list', 'heart2', 'heart1')
     def _get_time(self):
         for b in self:
             b.time = 0
@@ -260,9 +261,8 @@ class battle(models.Model): #falta terminar
                     fields.Datetime.from_string(b.date_start) + timedelta(minutes=b.time))
 
 
-   # @api.onchange('player1')
+    @api.onchange('player1')
     def onchange_player1(self):
-        print(self)
         if len(self.player1) > 0:
             self.name = self.player1.name
             return {
@@ -273,9 +273,8 @@ class battle(models.Model): #falta terminar
             }
 
 
-   # @api.onchange('player2')
+    @api.onchange('player2')
     def onchange_player2(self):
-        print(self)
         if len(self.player2) > 0:
             return {
                 'domain': {
@@ -286,7 +285,7 @@ class battle(models.Model): #falta terminar
 
 
 
-  #  @api.depends('heart1')
+   #@api.depends('heart1')
     def _get_creatures_available(self):
         print(self)
         for b in self:
@@ -311,7 +310,17 @@ class battle(models.Model): #falta terminar
             if b.state == '2':
                 b.state = '1'
 
+    def launch_battle(self):
+        print("launch")
 
+    def execute_battle(self):
+        print("execute")
+
+    def back(self):
+        print("back")
+
+    def simulate_battle(self):
+        print("simulate")
 class battle_creatures_rel(models.Model):
     _name = 'dungeons.battle_creatures_rel'
     _description = 'battle_creatures_rel'

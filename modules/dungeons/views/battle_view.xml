@@ -6,7 +6,6 @@
             <field name="arch" type="xml">
                 <tree>
                     <field name="name"/>
-                    <field name="progress"/>
                     <field name="player1"/>
                     <field name="player2"/>
                     <field name="heart1"/>
@@ -20,32 +19,44 @@
             <field name="model">dungeons.battle</field>
             <field name="arch" type="xml">
                 <form>
+                    <header>
+                        <button name="launch_battle" type="object" string="Launch Battle"
+                                class="btn btn-primary"/>
+                        <button name="back" type="object" string="Back" class="btn btn-primary"/>
+                        <button name="simulate_battle" type="object" string="Simulation"
+                                class="btn btn-primary"/>
+
+                        <field name="state" widget="statusbar"/>
+                    </header>
                     <sheet>
                         <group string="Battle Atributes">
                             <field name="name"/>
-                            <field name="Player1"/>
-                             <field name="Player2"/>
+                            <field name="player1"/>
+                            <field name="player2"/>
+                        </group>
+                        <group string="Battle progress">
+                            <field name="progress" widget="progressbar"/>
                         </group>
                     </sheet>
                 </form>
             </field>
         </record>
 
-    <!--    <record model="ir.ui.view" id="dungeons.battle_kanban">
+        <record model="ir.ui.view" id="dungeons.battle_kanban">
             <field name="name">dungeons battle kanban</field>
             <field name="model">dungeons.battle</field>
             <field name="arch" type="xml">
                 <kanban>
                     <field name="id"/>
                     <field name="name"/>
-                    <field name="heart_player"/>
-                    <field name="login"/>
+                    <field name="player1"/>
+                    <field name="player2"/>
                     <templates>
                         <t t-name="kanban-box">
                             <div t-attf-class="oe_kanban_card o_kanban_record_has_image_fill ">
                                 <div class="o_kanban_image_fill_left o_kanban_image_full d-none d-md-block"
-                                     t-attf-style="background-image:url('#{kanban_image('dungeons.player',
-                            'avatar', record.id.value, placeholder)}')">
+                                     t-attf-style="background-image:url('#{kanban_image('dungeons.battle',
+                            'image_battle', record.id.value, placeholder)}')">
                                 </div>
 
                                 <div class="oe_kanban_details d-flex flex-column">
@@ -62,16 +73,24 @@
                 </kanban>
             </field>
         </record>
-        <record model="ir.ui.view" id="dungeons.player_search">
-            <field name="name">dungeons player search</field>
-            <field name="model">dungeons.player</field>
+
+        <record model="ir.ui.view" id="dungeons.battle_calendar">
+            <field name="name">dungeons list</field>
+            <field name="model">dungeons.battle</field>
             <field name="arch" type="xml">
-                <search>
+                <calendar string="Battle Calendar"
+                          date_start="date_start"
+                          date_stop="date_end"
+                          color="player1"
+                >
                     <field name="name"/>
-                    <field name="heart_player"/>
-                </search>
+
+                    <field name="player1"/>
+                    <field name="player2"/>
+                </calendar>
             </field>
-        </record>-->
+        </record>
+
 
     </data>
 </odoo>
