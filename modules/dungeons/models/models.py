@@ -32,13 +32,16 @@ class heart(models.Model):
     coal = fields.Integer(default=50)
     steel = fields.Integer(default=10)
     gold = fields.Float(default=1000)
-    location = fields.Integer(default=random.randint(1, 999))#distancia random
+    location = fields.Integer(default=random.randint(1, 999))  # distancia random
+
     defense_creature = fields.Integer(default=0)
     magical_creature = fields.Integer(default=0)
     warrior_creature = fields.Integer(default=0)
     buildings = fields.One2many('dungeons.buildings', 'heart')
     creatures = fields.One2many('dungeons.creatures', 'heart')
-    available_buildings = fields.Many2many('dungeons.building_type', compute="_get_available_buildings") #Edificios disponibles.
+    available_buildings = fields.Many2many('dungeons.building_type',
+                                           compute="_get_available_buildings")  # Edificios disponibles.
+    level_building_avaliable = fields.Many2many('dungeons.buildings', compute="_get_upgrade_buildings")
 
     production_coal = fields.Float(compute='_get_total_productions')
     production_iron = fields.Float(compute='_get_total_productions')
@@ -47,14 +50,17 @@ class heart(models.Model):
     production_warrior_creatures = fields.Float(compute='_get_total_productions')
     production_defense_creatures = fields.Float(compute='_get_total_productions')
 
-
-    @api.depends('gold') #Funcion para mostrar los edificios segun el oro disponible.
+    @api.depends('gold')  # Funcion para mostrar los edificios segun el oro disponible.
     def _get_available_buildings(self):
         for c in self:
             c.available_buildings = self.env['dungeons.building_type'].search([('gold_cost_base', '<=', c.gold)])
 
 
-    @api.constrains('iron') #funcion para restringir la cantidad de hierro que se puede tener.
+    def _get_upgrade_buildings(self):
+        for c in self:
+            c.level_building_avaliable = self.env['dungeons.buildings'].search([('heart', '<=', c.id)])
+
+    @api.constrains('iron')  # funcion para restringir la cantidad de hierro que se puede tener.
     def _check_iron(self):
         for record in self:
             if record.iron > 3000:
@@ -72,7 +78,7 @@ class heart(models.Model):
             if record.steel > 3000:
                 raise ValidationError("You have too much steel %s" % record.steel)
 
-    @api.depends('buildings') #Funcion para sumar al heart las producciones de todos los edificios.
+    @api.depends('buildings')  # Funcion para sumar al heart las producciones de todos los edificios.
     def _get_total_productions(self):
         for h in self:
             h.production_coal = sum(h.buildings.mapped('production_coal'))
@@ -94,6 +100,7 @@ class heart(models.Model):
             magical = heart.magical_creature + heart.production_magical_creatures
             defense = heart.defense_creature + heart.production_defense_creatures
             warrior = heart.warrior_creature + heart.production_warrior_creatures
+            gold = heart.gold + 10
 
             heart.write({
                 "iron": iron,
@@ -101,15 +108,17 @@ class heart(models.Model):
                 "steel": steel,
                 "magical_creature": magical,
                 "defense_creature": defense,
-                "warrior_creature": warrior
+                "warrior_creature": warrior,
+                "gold": gold
 
             })
 
-    def distance(self, other_heart): # Define la distancia entre un heart y otro
+    def distance(self, other_heart):  # Define la distancia entre un heart y otro
         distance = 0
         if len(self) > 0 and len(other_heart) > 0:
-          distance = abs(self.location - other_heart.location)
+            distance = abs(self.location - other_heart.location)
         return distance
+
 
 class buildings(models.Model):
     _name = 'dungeons.buildings'
@@ -120,13 +129,56 @@ class buildings(models.Model):
     heart = fields.Many2one('dungeons.heart', ondelete='restrict')
     building_type = fields.Many2one('dungeons.building_type', ondelete='restrict')
     image_building = fields.Image(max_width=200, max_height=200, related='building_type.image_building')
+
     gold_cost_base = fields.Float(related='building_type.gold_cost_base')
+    coal_cost_base = fields.Float()
+    iron_cost_base = fields.Float()
+    steel_cost_base = fields.Float()
+
+    required_coal_levelup = fields.Float(compute='_get_required_coal_levelup')
+    required_iron_levelup = fields.Float(compute='_get_required_iron_levelup')
+    required_steel_levelup = fields.Float(compute='_get_required_steel_levelup')
+
     production_iron = fields.Float(compute="_get_productions")
     production_coal = fields.Float(compute="_get_productions")
     production_steel = fields.Float(compute="_get_productions")
     production_magical_creatures = fields.Float(compute="_get_productions")
     production_warrior_creatures = fields.Float(compute="_get_productions")
     production_defense_creatures = fields.Float(compute="_get_productions")
+
+
+
+    def _get_required_coal_levelup(self):
+        for b in self:
+            b.required_coal_levelup = 4 ** b.level
+
+    def _get_required_iron_levelup(self):
+        for b in self:
+            b.required_iron_levelup = 4 ** b.level
+
+    def _get_required_steel_levelup(self):
+        for b in self:
+            b.required_steel_levelup = 4 ** b.level
+
+    def levelupgrade_building(self):
+        for b in self:
+            required_coal = b.required_coal_levelup
+            available_coal = b.heart.coal
+
+            required_steel = b.required_steel_levelup
+            available_steel = b.heart.steel
+
+            required_iron = b.required_iron_levelup
+            available_iron = b.heart.iron
+
+            if (required_coal <= available_coal and required_iron <= available_iron and required_steel <= available_steel):
+                b.level += 1
+                b.heart.coal = b.heart.coal - required_coal
+                b.heart.steel = b.heart.steel - required_steel
+                b.heart.iron = b.heart.coal - required_iron
+
+            else:
+                raise ValidationError("You don't have enough coal or steel or iron")
 
     @api.constrains('level')
     def check_level(self):
@@ -145,7 +197,7 @@ class buildings(models.Model):
             production_warrior_creatures = b.building_type.production_warrior_creatures * level
             production_defense_creatures = b.building_type.production_defense_creatures * level
 
-            if production_coal + b.heart.coal >= 0 and production_iron + b.heart.iron >= 0 and production_steel + b.heart.steel >= 0 and   production_magical_creatures + b.heart.magical_creature >= 0 and  production_warrior_creatures + b.heart.warrior_creature  >= 0 and  production_defense_creatures + b.heart.defense_creature  >= 0:
+            if production_coal + b.heart.coal >= 0 and production_iron + b.heart.iron >= 0 and production_steel + b.heart.steel >= 0 and production_magical_creatures + b.heart.magical_creature >= 0 and production_warrior_creatures + b.heart.warrior_creature >= 0 and production_defense_creatures + b.heart.defense_creature >= 0:
                 b.production_coal = production_coal
                 b.production_iron = production_iron
                 b.production_steel = production_steel
@@ -160,7 +212,6 @@ class buildings(models.Model):
                 b.production_magical_creatures = 0
                 b.production_warrior_creatures = 0
                 b.production_defense_creatures = 0
-
 
 
 class building_type(models.Model):
@@ -189,10 +240,6 @@ class building_type(models.Model):
                 heart.gold -= record.gold_cost_base
 
 
-
-
-
-
 class creature_type(models.Model):
     _name = 'dungeons.creature_type'
     _description = 'Creatures types'
@@ -202,9 +249,6 @@ class creature_type(models.Model):
     life = fields.Float()
     defense = fields.Float()
     attack = fields.Float()
-
-
-
 
 
 class creatures(models.Model):
@@ -222,9 +266,7 @@ class creatures(models.Model):
     creature_type = fields.Many2one('dungeons.creature_type')
 
 
-
-
-class battle(models.Model): #falta terminar
+class battle(models.Model):  # falta terminar
     _name = 'dungeons.battle'
     _description = 'Battles'
 
@@ -241,9 +283,9 @@ class battle(models.Model): #falta terminar
     heart1 = fields.Many2one('dungeons.heart')
     heart2 = fields.Many2one('dungeons.heart')
     creatures1_list = fields.One2many('dungeons.battle_creatures_rel', 'battle_id')
-    creatures1_available = fields.Many2many('dungeons.heart_creatures_rel')#, compute='_get_creatures_available')
+    creatures1_available = fields.Many2many('dungeons.heart_creatures_rel')# , compute='_get_creatures_available')
     total_power = fields.Float()  # ORM Mapped
-   # winner = fields.Many2one()
+    # winner = fields.Many2one()
     draft = fields.Boolean()
 
     @api.depends('creatures1_list', 'heart2', 'heart1')
@@ -260,7 +302,6 @@ class battle(models.Model): #falta terminar
                 b.date_end = fields.Datetime.to_string(
                     fields.Datetime.from_string(b.date_start) + timedelta(minutes=b.time))
 
-
     @api.onchange('player1')
     def onchange_player1(self):
         if len(self.player1) > 0:
@@ -272,7 +313,6 @@ class battle(models.Model): #falta terminar
                 }
             }
 
-
     @api.onchange('player2')
     def onchange_player2(self):
         if len(self.player2) > 0:
@@ -283,9 +323,7 @@ class battle(models.Model): #falta terminar
                 }
             }
 
-
-
-   #@api.depends('heart1')
+    # @api.depends('heart1')
     def _get_creatures_available(self):
         print(self)
         for b in self:
@@ -321,6 +359,8 @@ class battle(models.Model): #falta terminar
 
     def simulate_battle(self):
         print("simulate")
+
+
 class battle_creatures_rel(models.Model):
     _name = 'dungeons.battle_creatures_rel'
     _description = 'battle_creatures_rel'
@@ -331,8 +371,6 @@ class battle_creatures_rel(models.Model):
     qty = fields.Integer()
 
 
-
-
 class heart_creatures_rel(models.Model):
     _name = 'dungeons.heart_creatures_rel'
     _description = 'heart_creatures_rel'
@@ -341,7 +379,6 @@ class heart_creatures_rel(models.Model):
     creatures_id = fields.Many2one('dungeons.creatures')
     heart_id = fields.Many2one('dungeons.heart')
     qty = fields.Integer()
-
 
     def add_to_battle(self):  # ORM
         for c in self:
