@@ -7,7 +7,7 @@
 
         <record model="ir.actions.act_window" id="dungeons.action_player_window">
             <field name="name">Players</field>
-            <field name="res_model">dungeons.player</field>
+            <field name="res_model">res.partner</field>
             <field name="view_mode">kanban,tree,form</field>
         </record>
         <record model="ir.actions.act_window" id="dungeons.action_heart_window">

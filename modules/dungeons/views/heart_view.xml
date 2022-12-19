@@ -33,7 +33,7 @@
                                 <field name="gold"/>
                             </group>
                             <notebook>
-                                <page string="mine">
+                                <page string="resources">
                                     <group string="Mines">
                                         <field name="iron"/>
                                         <field name="coal"/>

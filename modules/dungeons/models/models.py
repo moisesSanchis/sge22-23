@@ -7,11 +7,14 @@ import random
 from datetime import datetime, timedelta
 
 
-class player(models.Model):
-    _name = 'dungeons.player'
-    _description = 'players'
 
-    name = fields.Char()
+
+class player(models.Model):
+    _name = 'res.partner'
+    _description = 'players'
+    _inherit = 'res.partner'
+
+    #name = fields.Char()
     avatar = fields.Image(max_width=200,
                           max_height=200)  # Atributo avatar que es una imagen y tiene un tamaño predeterminado.
     login = fields.Char()
@@ -26,7 +29,7 @@ class heart(models.Model):
 
     name = fields.Char()
     avatar_heart = fields.Image(max_width=200, max_height=200)
-    player = fields.Many2one('dungeons.player', ondelete='cascade')
+    player = fields.Many2one('res.partner', ondelete='cascade')
     life = fields.Integer(default=2000)
     iron = fields.Integer(default=100)
     coal = fields.Integer(default=50)
@@ -197,7 +200,10 @@ class buildings(models.Model):
             production_warrior_creatures = b.building_type.production_warrior_creatures * level
             production_defense_creatures = b.building_type.production_defense_creatures * level
 
-            if production_coal + b.heart.coal >= 0 and production_iron + b.heart.iron >= 0 and production_steel + b.heart.steel >= 0 and production_magical_creatures + b.heart.magical_creature >= 0 and production_warrior_creatures + b.heart.warrior_creature >= 0 and production_defense_creatures + b.heart.defense_creature >= 0:
+            if production_coal + b.heart.coal >= 0 and production_iron + b.heart.iron >= 0 and production_steel +\
+                    b.heart.steel >= 0 and production_magical_creatures + b.heart.magical_creature >= 0 and \
+                    production_warrior_creatures + b.heart.warrior_creature >= 0 and production_defense_creatures +\
+                    b.heart.defense_creature >= 0:
                 b.production_coal = production_coal
                 b.production_iron = production_iron
                 b.production_steel = production_steel
@@ -278,12 +284,12 @@ class battle(models.Model):  # falta terminar
     distance = fields.Float(compute='_get_time')
     progress = fields.Float()
     state = fields.Selection([('1', 'Preparation'), ('2', 'Send'), ('3', 'Finished')], default='1')
-    player1 = fields.Many2one('dungeons.player')
-    player2 = fields.Many2one('dungeons.player')
+    player1 = fields.Many2one('res.partner')
+    player2 = fields.Many2one('res.partner')
     heart1 = fields.Many2one('dungeons.heart')
     heart2 = fields.Many2one('dungeons.heart')
     creatures1_list = fields.One2many('dungeons.battle_creatures_rel', 'battle_id')
-    creatures1_available = fields.Many2many('dungeons.heart_creatures_rel')# , compute='_get_creatures_available')
+    creatures1_available = fields.Many2many('dungeons.heart_creatures_rel', compute='_get_creatures_available')
     total_power = fields.Float()  # ORM Mapped
     # winner = fields.Many2one()
     draft = fields.Boolean()
@@ -323,15 +329,15 @@ class battle(models.Model):  # falta terminar
                 }
             }
 
-    # @api.depends('heart1')
+    @api.depends('heart1')
     def _get_creatures_available(self):
         print(self)
         for b in self:
             b.creatures1_available = b.heart1.creatures.ids
 
     def launch_battle(self):
-        print(self)
         for b in self:
+
             if len(b.heart1) == 1 and len(b.heart2) == 1 and len(b.cretures_list) > 0 and b.state == '1':
 
                 b.date_start = fields.Datetime.now()
@@ -343,13 +349,11 @@ class battle(models.Model):  # falta terminar
                 b.state = '2'
 
     def back(self):
-        print(self)
         for b in self:
             if b.state == '2':
                 b.state = '1'
 
-    def launch_battle(self):
-        print("launch")
+
 
     def execute_battle(self):
         print("execute")
