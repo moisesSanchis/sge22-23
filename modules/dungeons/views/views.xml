@@ -9,6 +9,12 @@
             <field name="name">Players</field>
             <field name="res_model">res.partner</field>
             <field name="view_mode">kanban,tree,form</field>
+            <field name="domain"/>
+            <field name="search_view_id" ref ="dungeons.player_search"/>
+            <field name="context">{'default_is_player': True, 'search_default_player_partner': 1}</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('dungeons.player_tree_list')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('dungeons.player_form_list')}),]" />
         </record>
         <record model="ir.actions.act_window" id="dungeons.action_heart_window">
             <field name="name">Hearts</field>

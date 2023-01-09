@@ -4,11 +4,13 @@
         <record id="dungeons.player_demo_1" model="res.partner">
             <field name="name">Carlos</field>
             <field name="login">almuerzo</field>
+            <field name="is_player">True</field>
             <field name="password">almuerzoAlmuerzo</field>
         </record>
         <record id="dungeons.player_demo_2" model="res.partner">
             <field name="name">Toni</field>
             <field name="login">loco</field>
+             <field name="is_player">True</field>
             <field name="password">locoLoco</field>
         </record>
         <record id="dungeons.heart_demo_1" model="dungeons.heart">
@@ -17,20 +19,21 @@
             <field name="iron">300</field>
             <field name="coal">500</field>
             <field name="steel">100</field>
-            <field name="magical_creatures">10</field>
-            <field name="warrior_creatures">20</field>
-            <field name="defense_creatures">30</field>
+            <field name="magical_creature">10</field>
+            <field name="warrior_creature">20</field>
+            <field name="defense_creature">30</field>
             <field name="player" ref="dungeons.player_demo_1"/>
         </record>
+
         <record id="dungeons.heart_demo_2" model="dungeons.heart">
             <field name="name">Corazon de Toni</field>
             <field name="life">1700</field>
             <field name="iron">200</field>
             <field name="coal">600</field>
             <field name="steel">150</field>
-            <field name="magical_creatures">30</field>
-            <field name="warrior_creatures">10</field>
-            <field name="defense_creatures">20</field>
+            <field name="magical_creature">30</field>
+            <field name="warrior_creature">10</field>
+            <field name="defense_creature">20</field>
             <field name="player" ref="dungeons.player_demo_2"/>
         </record>
         <record id="dungeons.heart_demo_3" model="dungeons.heart">
@@ -39,12 +42,21 @@
             <field name="iron">100</field>
             <field name="coal">50</field>
             <field name="steel">10</field>
-            <field name="magical_creatures">20</field>
-            <field name="warrior_creatures">40</field>
-            <field name="defense_creatures">50</field>
+            <field name="magical_creature">20</field>
+            <field name="warrior_creature">40</field>
+            <field name="defense_creature">50</field>
             <field name="player" ref="dungeons.player_demo_1"/>
         </record>
-
+       <!--  <record id="dungeons.creatures" model="dungeons.creatures">
+            <field name="name">Criatura demo 1</field>
+            <field name="heart" ref="dungeons.heart_demo_1"/>
+            <field name="creature_type" ref="dungeons.creature_type_magical_creature"/>
+        </record>
+        <record id="dungeons.heart_creatures_rel" model="dungeons.heart_creatures_rel">
+            <field name="creatures_id" ref="dungeons.creature_type_magical_creature"/>
+            <field name="heart" ref="dungeons.heart_demo_1"/>
+            <field name="qty">3</field>
+        </record>-->
         <record id="dungeons.buildings" model="dungeons.buildings">
             <field name="name">Criadero demo 1</field>
             <field name="level">5</field>
@@ -63,7 +75,7 @@
             <field name="heart" ref="dungeons.heart_demo_3"/>
             <field name="building_type" ref="dungeons.building_type_hatchery"/>
         </record>
-         <record id="dungeons.buildings" model="dungeons.buildings">
+        <record id="dungeons.buildings" model="dungeons.buildings">
             <field name="name">Mina de carbon demo 1</field>
             <field name="level">6</field>
             <field name="heart" ref="dungeons.heart_demo_1"/>
@@ -105,7 +117,7 @@
             <field name="heart" ref="dungeons.heart_demo_1"/>
             <field name="building_type" ref="dungeons.building_type_forge"/>
         </record>
-         <record id="dungeons.buildings" model="dungeons.buildings">
+        <record id="dungeons.buildings" model="dungeons.buildings">
             <field name="name">Forja demo 2</field>
             <field name="level">4</field>
             <field name="heart" ref="dungeons.heart_demo_3"/>

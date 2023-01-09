@@ -29,6 +29,7 @@
                             </field>
                             <field name="login"/>
                             <field name="password" password="true"/>
+                            <field name="is_player"/>
                         </group>
                     </page>
                 </notebook>
@@ -52,6 +53,7 @@
                             </field>
                             <field name="login"/>
                             <field name="password" password="true"/>
+                            <field name="is_player"/>
                         </group>
                     </sheet>
                 </form>
@@ -71,7 +73,7 @@
                         <t t-name="kanban-box">
                             <div t-attf-class="oe_kanban_card o_kanban_record_has_image_fill ">
                                 <div class="o_kanban_image_fill_left o_kanban_image_full d-none d-md-block"
-                                     t-attf-style="background-image:url('#{kanban_image('dungeons.player',
+                                     t-attf-style="background-image:url('#{kanban_image('res.partner',
                             'avatar', record.id.value, placeholder)}')">
                                 </div>
 
@@ -92,8 +94,10 @@
         <record model="ir.ui.view" id="dungeons.player_search">
             <field name="name">dungeons player search</field>
             <field name="model">res.partner</field>
+            <field name="priority" eval="17"/>
             <field name="arch" type="xml">
                 <search>
+                    <filter name="player_partner" string="Is Player" domain="[('is_player','=',True)]" />
                     <field name="name"/>
                     <field name="heart_player"/>
                 </search>

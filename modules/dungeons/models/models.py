@@ -12,13 +12,14 @@ from datetime import datetime, timedelta
 class player(models.Model):
     _name = 'res.partner'
     _description = 'players'
-    _inherit = 'res.partner'
+    _inherit = 'res.partner'# Indica que el modelo hereda de res.partner
 
     #name = fields.Char()
     avatar = fields.Image(max_width=200,
                           max_height=200)  # Atributo avatar que es una imagen y tiene un tamaño predeterminado.
     login = fields.Char()
     password = fields.Char()
+    is_player = fields.Boolean(default=False)
     heart_player = fields.One2many(comodel_name='dungeons.heart',
                                    inverse_name='player')  # Relacion entre jugadores y mazmorras
 
@@ -29,7 +30,7 @@ class heart(models.Model):
 
     name = fields.Char()
     avatar_heart = fields.Image(max_width=200, max_height=200)
-    player = fields.Many2one('res.partner', ondelete='cascade')
+    player = fields.Many2one('res.partner', domain="[('is_player','=',True)]", ondelete='cascade')
     life = fields.Integer(default=2000)
     iron = fields.Integer(default=100)
     coal = fields.Integer(default=50)
@@ -91,6 +92,10 @@ class heart(models.Model):
             h.production_warrior_creatures = sum(h.buildings.mapped('production_warrior_creatures'))
             h.production_defense_creatures = sum(h.buildings.mapped('production_defense_creatures'))
 
+           # h.env['dungeons.creatures'].create({
+            #   "heart": h.id,
+           #    "creature_type": h.env['dungeons.creature_type'].ids[0]
+            #})
     @api.model
     def produce(self):  # ORM CRON
         self.search([]).produce_heart()
@@ -266,7 +271,7 @@ class creatures(models.Model):
     life = fields.Float()
     attack = fields.Float()
     defense = fields.Float()
-    speed = fields.Float(deafult=5)
+    speed = fields.Float(default=5)
     creation_time = fields.Float(compute='_get_creation_time')
     heart = fields.Many2one('dungeons.heart')
     creature_type = fields.Many2one('dungeons.creature_type')
@@ -331,15 +336,15 @@ class battle(models.Model):  # falta terminar
 
     @api.depends('heart1')
     def _get_creatures_available(self):
-        print(self)
+
         for b in self:
+            print(b.heart1.creatures.ids)
             b.creatures1_available = b.heart1.creatures.ids
 
     def launch_battle(self):
         for b in self:
-
-            if len(b.heart1) == 1 and len(b.heart2) == 1 and len(b.cretures_list) > 0 and b.state == '1':
-
+            if len(b.heart1) == 1 and len(b.heart2) == 1 and len(b.creatures1_list) > 0 and b.state == '1':
+                print("entra")
                 b.date_start = fields.Datetime.now()
                 b.progress = 0
                 for s in b.creatures1_list:
@@ -363,6 +368,10 @@ class battle(models.Model):  # falta terminar
 
     def simulate_battle(self):
         print("simulate")
+       # b = self
+       # winner = False
+        #draft = False
+       # creatures1 = b.creatures1_list.mapped(lambda s:[s.creatures_id.read(['id', 'life', 'attack', 'defense'])])
 
 
 class battle_creatures_rel(models.Model):
