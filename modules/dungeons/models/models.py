@@ -225,6 +225,22 @@ class buildings(models.Model):
                 b.production_defense_creatures = 0
 
 
+class building_wizard(models.TransientModel): #Falta terminar...
+    _name = 'dungeons.building_wizard'
+    _description = 'Wizard para crear edificios'
+
+    def _default_heart(self):
+        return self.env['dungeons.heart'].browse(self._context.get('active_id'))
+
+    heart = fields.Many2one('dungeons.heart', default=_default_heart())
+    building_type = fields.Many2one('dungeons.building_type')
+
+
+    def create_building(self):
+        self.ensure_one() # Nos aseguramos que solo estamos en un corazon.
+        if(heart.gold>self.building_type.gold_cost_base):
+            self.heart.write({'building_type': self.building_type})
+
 class building_type(models.Model):
     _name = 'dungeons.building_type'
     _description = 'Building types'
