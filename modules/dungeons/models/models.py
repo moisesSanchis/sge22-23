@@ -225,14 +225,14 @@ class buildings(models.Model):
                 b.production_defense_creatures = 0
 
 
-class building_wizard(models.TransientModel): #Falta terminar...
+class building_wizard(models.TransientModel):
     _name = 'dungeons.building_wizard'
     _description = 'Wizard para crear edificios'
 
     def _default_heart(self):
         return self.env['dungeons.heart'].browse(self._context.get('active_id'))
 
-    heart = fields.Many2one('dungeons.heart', default=_default_heart())
+    heart = fields.Many2one('dungeons.heart', default=_default_heart)
     building_type = fields.Many2one('dungeons.building_type')
 
 

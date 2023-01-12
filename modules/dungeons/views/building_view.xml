@@ -1,5 +1,34 @@
 <odoo>
   <data>
+     <record model="ir.ui.view" id="dungeons.building_wizard_form">
+            <field name="name">dungeons building wizard</field>
+            <field name="model">dungeons.building_wizard</field>
+            <field name="arch" type="xml">
+                <form>
+
+                        <group>
+                            <field name="heart"/>
+                            <field name="building_type"/>
+                        </group>
+
+                     <footer>
+                        <button name="create_building" type="object"
+                                string="Create" class="oe_highlight"/>
+                        <button special="cancel" string="Cancel"/>
+                    </footer>
+
+                </form>
+            </field>
+        </record>
+
+        <record id="dungeons.building_wizard_action" model="ir.actions.act_window">
+            <field name="name">Create Building</field>
+            <field name="res_model">dungeons.building_wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="binding_model_id" ref="base.model_res_partner"/>
+        </record>
+
     <record model="ir.ui.view" id="dungeons.buildings_tree_list">
       <field name="name">dungeons buildings list</field>
       <field name="model">dungeons.buildings</field>
