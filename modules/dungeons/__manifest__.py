@@ -25,12 +25,12 @@
     # always loaded
     'data': [
         'security/ir.model.access.csv',
+        'views/battle_view.xml',
         'views/heart_view.xml',
         'views/player_view.xml',
         'views/building_view.xml',
         'views/building_type_view.xml',
         'views/creature_type_view.xml',
-        'views/battle_view.xml',
         'views/views.xml',
         'views/templates.xml',
         'demo/data.xml',

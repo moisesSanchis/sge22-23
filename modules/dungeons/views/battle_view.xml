@@ -40,24 +40,26 @@
                             <field name="progress" widget="progressbar"/>
                         </group>
                     </sheet>
-                      <notebook>
-              <page string="Creatures">
-                <group>
-                  <field name="creatures1_list">
-                    <tree>
-                      <field name="name"/>
-                      <field name="qty"/>
-                    </tree>
-                  </field>
-                  <field name="creatures1_available">
-                    <tree>
-                      <field name="name"/>
-                      <field name="qty"/>
-                      <button name="add_to_battle" type="object" string="Add" class="btn btn-primary" context="{'ctx_battle':parent.id}"/>
-                    </tree>
-                  </field>
-                </group>
-              </page></notebook>
+                    <notebook>
+                        <page string="Creatures">
+                            <group>
+                                <field name="creatures1_list">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="qty"/>
+                                    </tree>
+                                </field>
+                                <field name="creatures1_available">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="qty"/>
+                                        <button name="add_to_battle" type="object" string="Add" class="btn btn-primary"
+                                                context="{'ctx_battle':parent.id}"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                    </notebook>
                 </form>
             </field>
         </record>
@@ -110,6 +112,44 @@
                 </calendar>
             </field>
         </record>
+
+        <record model="ir.ui.view" id="dungeons.battle_wizard_form_list">
+            <field name="name">dungeons battle wizard</field>
+            <field name="model">dungeons.battle_wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <group states="1">
+                        <field name="name"/>
+                        <field name="player1"/>
+                        <field name="heart1"/>
+                        <field name="creatures1_list"/>
+                    </group>
+                    <group states="2">
+                        <field name="player2"/>
+                        <field name="heart2"/>
+                    </group>
+                    <footer>
+                        <button name="action_previous" type="object"
+                                string="Previous"
+                                states="2,3"/>
+                        <button name="action_next" type="object"
+                                string="Next" states="1,2"
+                                class="oe_highlight"/>
+                    </footer>
+
+                </form>
+            </field>
+        </record>
+
+    <record id="dungeons.battle_wizard_action" model="ir.actions.act_window">
+      <field name="name">Create battle</field>
+      <field name="res_model">dungeons.battle_wizard</field>
+      <field name="view_mode">form</field>
+      <field name="target">new</field>
+    </record>
 
 
     </data>

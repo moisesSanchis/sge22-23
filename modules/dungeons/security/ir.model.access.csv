@@ -8,5 +8,5 @@ access_dungeons_battle,dungeons.battle,model_dungeons_battle,base.group_user,1,1
 access_dungeons_battle_creatures_rel,dungeons.battle_creatures_rel,model_dungeons_battle_creatures_rel,base.group_user,1,1,1,1
 access_dungeons_heart_creatures_rel,dungeons.heart_creatures_rel,model_dungeons_heart_creatures_rel,base.group_user,1,1,1,1
 access_dungeons_building_wizard,dungeons.building_wizard,model_dungeons_building_wizard,base.group_user,1,1,1,1
-
+access_dungeons_battle_wizard,dungeons.battle_wizard,model_dungeons_battle_wizard,base.group_user,1,1,1,1
 

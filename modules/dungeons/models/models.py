@@ -424,3 +424,96 @@ class heart_creatures_rel(models.Model):
                 if current_creatures.qty < c.qty:
                     current_creatures.qty += 1
                 # c.qty -= 1
+
+
+
+
+class battle_wizard(models.TransientModel):
+    _name = 'dungeons.battle_wizard'
+    _description = 'Battle wizard'
+
+    name = fields.Char()
+    date_start = fields.Datetime(readonly=True, default=fields.Datetime.now)
+    date_end = fields.Datetime(compute='_get_time')
+    time = fields.Float(compute='_get_time')
+    distance = fields.Float(compute='_get_time')
+    state = fields.Selection([('1', 'Select player1'), ('2', 'Select Player2'), ('3', 'Resume')], default='1')
+    player1 = fields.Many2one('res.partner')
+    player2 = fields.Many2one('res.partner')
+    heart1 = fields.Many2one('dungeons.heart')
+    heart2 = fields.Many2one('dungeons.heart')
+    creatures1_list = fields.One2many('dungeons.battle_creatures_rel', 'battle_id')
+    creatures1_available = fields.Many2many('dungeons.heart_creatures_rel', compute='_get_creatures_available')
+    total_power = fields.Float()  # ORM Mapped
+
+    @api.onchange('player1')
+    def onchange_player1(self):
+        if len(self.player1) > 0:
+            self.name = self.player1.name
+            return {
+                'domain': {
+                    'heart1': [('id', 'in', self.player1.heart_player.ids)],
+                    'player2': [('id', '!=', self.player1.id)],
+                }
+            }
+
+    @api.onchange('player2')
+    def onchange_player2(self):
+        if len(self.player2) > 0:
+            return {
+                'domain': {
+                    'heart2': [('id', 'in', self.player2.heart_player.ids)],
+                    'player1': [('id', '!=', self.player2.id)],
+                }
+            }
+
+    def _get_creatures_available(self):
+
+        for b in self:
+            print(b.heart1.creatures.ids)
+            b.creatures1_available = b.heart1.creatures.ids
+
+
+    def  action_previous(self):
+        if self.state == '2':
+            self.state = '1'
+        elif self.state == '3':
+            self.state = '2'
+        return {
+            'name': 'Create Battle',
+            'type': 'ir.actions.act_window',
+            'res_model': 'dungeons.battle_wizard',
+            'view_mode': 'form',
+            'target': 'new',
+            'res_id': self.id
+        }
+
+    def action_next(self):
+        if self.state == '1':
+            self.state = '2'
+        elif self.state == '2':
+            self.state = '3'
+        return {
+            'name': 'Create Battle',
+            'type': 'ir.actions.act_window',
+            'res_model': 'dungeons.battle_wizard',
+            'view_mode': 'form',
+            'target': 'new',
+            'res_id': self.id
+        }
+
+    @api.depends('creatures1_list', 'heart2', 'heart1')
+    def _get_time(self):
+        for b in self:
+            b.time = 0
+            b.distance = 0
+            b.date_end = fields.Datetime.now()
+            if len(b.heart1) > 0 and len(b.heart2) > 0 and len(b.creatures1_list) > 0 and len(
+                    b.creatures1_list.creatures_id) > 0:
+                b.distance = b.heart1.distance(b.heart2)
+                min_speed = b.creatures1_list.creatures_id.sorted(lambda s: s.speed).mapped('speed')[0]
+                b.time = b.distance / min_speed
+                b.date_end = fields.Datetime.to_string(
+                    fields.Datetime.from_string(b.date_start) + timedelta(minutes=b.time))
+
+
