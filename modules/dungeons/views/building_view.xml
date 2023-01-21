@@ -9,10 +9,11 @@
                         <group>
                             <field name="heart"/>
                             <field name="building_type"/>
+                          <!--  <filter name="heart"  context="{'heart':active_id}"/>-->
                         </group>
 
                      <footer>
-                        <button name="create_building" type="model"
+                        <button name="create_building_wizard" type="object"
                                 string="Create" class="oe_highlight"/>
                         <button special="cancel" string="Cancel"/>
                     </footer>
@@ -26,7 +27,6 @@
             <field name="res_model">dungeons.building_wizard</field>
             <field name="view_mode">form</field>
             <field name="target">new</field>
-          <!--  <field name="binding_model_id" ref="base.model_res_partner"/>-->
         </record>
 
     <record model="ir.ui.view" id="dungeons.buildings_tree_list">

@@ -8,7 +8,6 @@ from datetime import datetime, timedelta
 
 
 
-
 class player(models.Model):
     _name = 'res.partner'
     _description = 'players'
@@ -91,11 +90,9 @@ class heart(models.Model):
             h.production_magical_creatures = sum(h.buildings.mapped('production_magical_creatures'))
             h.production_warrior_creatures = sum(h.buildings.mapped('production_warrior_creatures'))
             h.production_defense_creatures = sum(h.buildings.mapped('production_defense_creatures'))
+            print(self.creatures)
 
-           # h.env['dungeons.creatures'].create({
-            #   "heart": h.id,
-           #    "creature_type": h.env['dungeons.creature_type'].ids[0]
-            #})
+
     @api.model
     def produce(self):  # ORM CRON
         self.search([]).produce_heart()
@@ -205,6 +202,25 @@ class buildings(models.Model):
             production_warrior_creatures = b.building_type.production_warrior_creatures * level
             production_defense_creatures = b.building_type.production_defense_creatures * level
 
+            for c in range(production_magical_creatures):
+                self.env['dungeons.creatures'].create({
+                    "heart": self.heart.id,
+                    "creature_type": self.env['dungeons.creature_type'].search([('name', '=', 'Magical Creature')]).id
+
+                })
+            for c in range(production_warrior_creatures):
+                self.env['dungeons.creatures'].create({
+                    "heart": self.heart.id,
+                    "creature_type": self.env['dungeons.creature_type'].search([('name', '=', 'Warrior Creature')]).id
+
+                })
+            for c in range(production_defense_creatures):
+                self.env['dungeons.creatures'].create({
+                    "heart": self.heart.id,
+                    "creature_type": self.env['dungeons.creature_type'].search([('name', '=', 'Defense Creature')]).id
+
+                })
+
             if production_coal + b.heart.coal >= 0 and production_iron + b.heart.iron >= 0 and production_steel +\
                     b.heart.steel >= 0 and production_magical_creatures + b.heart.magical_creature >= 0 and \
                     production_warrior_creatures + b.heart.warrior_creature >= 0 and production_defense_creatures +\
@@ -232,14 +248,18 @@ class building_wizard(models.TransientModel):
     def _default_heart(self):
         return self.env['dungeons.heart'].browse(self._context.get('active_id'))
 
-    heart = fields.Many2one('dungeons.heart', default=_default_heart)
+    heart = fields.Many2one('dungeons.heart', default=_default_heart, required=True)
     building_type = fields.Many2one('dungeons.building_type')
 
 
-    def create_building(self):
-        self.ensure_one() # Nos aseguramos que solo estamos en un corazon.
-        if(heart.gold>self.building_type.gold_cost_base):
-            self.heart.write({'building_type': self.building_type})
+    def create_building_wizard(self):
+       self.ensure_one() # Nos aseguramos que solo estamos en un corazon.
+       if(self.heart.gold>self.building_type.gold_cost_base):
+           self.env['dungeons.buildings'].create({
+                 "heart": self.heart.id,
+                 "building_type": self.building_type.id
+           })
+
 
 class building_type(models.Model):
     _name = 'dungeons.building_type'
@@ -276,19 +296,12 @@ class creature_type(models.Model):
     life = fields.Float()
     defense = fields.Float()
     attack = fields.Float()
-
+    speed = fields.Float(default=5)
 
 class creatures(models.Model):
     _name = 'dungeons.creatures'
     _description = 'Creatures'
-
     name = fields.Char()
-    image = fields.Image(max_width=200, max_height=200)
-    life = fields.Float()
-    attack = fields.Float()
-    defense = fields.Float()
-    speed = fields.Float(default=5)
-    creation_time = fields.Float(compute='_get_creation_time')
     heart = fields.Many2one('dungeons.heart')
     creature_type = fields.Many2one('dungeons.creature_type')
 
@@ -360,14 +373,14 @@ class battle(models.Model):  # falta terminar
     def launch_battle(self):
         for b in self:
             if len(b.heart1) == 1 and len(b.heart2) == 1 and len(b.creatures1_list) > 0 and b.state == '1':
-                print("entra")
-                b.date_start = fields.Datetime.now()
-                b.progress = 0
-                for s in b.creatures1_list:
-                    creatures_available = \
-                        b.creatures1_available.filtered(lambda s_a: s_a.creatures_id.id == s.creatures_id.id)[0]
-                    creatures_available.qty -= s.qty
-                b.state = '2'
+                print(b.creatures1_list)
+               # b.date_start = fields.Datetime.now()
+                #b.progress = 0
+                #for s in b.creatures1_list:
+                 #   creatures_available = \
+                  #      b.creatures1_available.filtered(lambda s_a: s_a.creatures_id.id == s.creatures_id.id)[0]
+                   # creatures_available.qty -= s.qty
+                #b.state = '2'
 
     def back(self):
         for b in self:

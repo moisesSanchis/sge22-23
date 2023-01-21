@@ -36,7 +36,7 @@
             </field>
         </record>
 
-        <record model="ir.ui.view" id="dungeons.player_form_list">
+       <record model="ir.ui.view" id="dungeons.player_form_list">
             <field name="name">dungeons player list</field>
             <field name="model">res.partner</field>
             <field name="arch" type="xml">

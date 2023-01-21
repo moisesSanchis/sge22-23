@@ -1345,6 +1345,7 @@ YRVYxDOHBc9AgejUd0EtfiNW78bglcZdlyy1s31MsC4hfqGcMwUblw3cLy8wn//Z</field>
             <field name="name">Magical Creature</field>
              <field name="life">30</field>
              <field name="attack">50</field>
+            <field name="speed">5</field>
             <field name="image_creature">/9j/4AAQSkZJRgABAQEBLAEsAAD/4SEYRXhpZgAASUkqAAgAAAAHABIBAwABAAAAAQAAABoBBQAB
 AAAAYgAAABsBBQABAAAAagAAACgBAwABAAAAAgAAADEBAgANAAAAcgAAADIBAgAUAAAAgAAAAGmH
 BAABAAAAlAAAAL4AAAAsAQAAAQAAACwBAAABAAAAR0lNUCAyLjEwLjE4AAAyMDIyOjExOjA3IDEw
@@ -1804,6 +1805,7 @@ RW1teTtzRYVFhlIVv1gxUjvmNMGOjJ2/6v/Z
             <field name="name">Warrior Creature</field>
              <field name="life">60</field>
              <field name="attack">20</field>
+             <field name="speed">6</field>
             <field name="image_creature">/9j/4AAQSkZJRgABAQEASABIAAD/4RS8RXhpZgAASUkqAAgAAAAIABIBAwABAAAAAQAAABoBBQAB
 AAAAbgAAABsBBQABAAAAdgAAACgBAwABAAAAAgAAADEBAgANAAAAfgAAADIBAgAUAAAAjAAAABMC
 AwABAAAAAQAAAGmHBAABAAAAoAAAAO4AAABIAAAAAQAAAEgAAAABAAAAR0lNUCAyLjEwLjE4AAAy
@@ -2086,6 +2088,7 @@ mXLWWxZbC9oqruUzDT+x6Vs0tBnivummK+LUQM2RQNnOL+Y1GQvlicJfaU6bFzSxOB7z/9k=
             <field name="name">Defense Creature</field>
              <field name="life">50</field>
              <field name="defense">50</field>
+              <field name="speed">7</field>
             <field name="image_creature">/9j/4AAQSkZJRgABAQEASABIAAD/4SkmRXhpZgAASUkqAAgAAAAGABoBBQABAAAAVgAAABsBBQAB
 AAAAXgAAACgBAwABAAAAAgAAADEBAgANAAAAZgAAADIBAgAUAAAAdAAAAGmHBAABAAAAiAAAAJoA
 AABIAAAAAQAAAEgAAAABAAAAR0lNUCAyLjEwLjE4AAAyMDIyOjExOjA3IDEwOjIxOjM0AAEAAaAD
