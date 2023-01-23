@@ -1,0 +1,31 @@
+<odoo>
+  <data>
+
+    <record model="ir.ui.view" id="dungeons.creatures_tree_list">
+      <field name="name">dungeons creatures list</field>
+      <field name="model">dungeons.creatures</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name" />
+          <field name="heart" />
+          <field name="creature_type" />
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="dungeons.creatures_form">
+      <field name="name">dungeons creatures list</field>
+      <field name="model">dungeons.creatures</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+              <group string="Basic Atributes">
+                <field name="heart" />
+                <field name="creature_type" />
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+  </data>
+</odoo>

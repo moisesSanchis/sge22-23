@@ -90,7 +90,7 @@ class heart(models.Model):
             h.production_magical_creatures = sum(h.buildings.mapped('production_magical_creatures'))
             h.production_warrior_creatures = sum(h.buildings.mapped('production_warrior_creatures'))
             h.production_defense_creatures = sum(h.buildings.mapped('production_defense_creatures'))
-            print(self.creatures)
+            #print(self.creatures)
 
 
     @api.model
@@ -151,8 +151,6 @@ class buildings(models.Model):
     production_warrior_creatures = fields.Float(compute="_get_productions")
     production_defense_creatures = fields.Float(compute="_get_productions")
 
-
-
     def _get_required_coal_levelup(self):
         for b in self:
             b.required_coal_levelup = 4 ** b.level
@@ -198,28 +196,31 @@ class buildings(models.Model):
             production_coal = b.building_type.production_coal * level
             production_iron = b.building_type.production_iron * level
             production_steel = b.building_type.production_steel * level
-            production_magical_creatures = b.building_type.production_magical_creatures * level
-            production_warrior_creatures = b.building_type.production_warrior_creatures * level
-            production_defense_creatures = b.building_type.production_defense_creatures * level
+            production_magical_creatures = int(b.building_type.production_magical_creatures * level)
+            production_warrior_creatures = int(b.building_type.production_warrior_creatures * level)
+            production_defense_creatures = int(b.building_type.production_defense_creatures * level)
 
-            for c in range(production_magical_creatures):
+
+            for c in range(0,production_magical_creatures):
                 self.env['dungeons.creatures'].create({
                     "heart": self.heart.id,
                     "creature_type": self.env['dungeons.creature_type'].search([('name', '=', 'Magical Creature')]).id
 
                 })
-            for c in range(production_warrior_creatures):
+            for c in range(0,production_warrior_creatures):
                 self.env['dungeons.creatures'].create({
                     "heart": self.heart.id,
                     "creature_type": self.env['dungeons.creature_type'].search([('name', '=', 'Warrior Creature')]).id
 
                 })
-            for c in range(production_defense_creatures):
+            for c in range(0,production_defense_creatures):
                 self.env['dungeons.creatures'].create({
                     "heart": self.heart.id,
                     "creature_type": self.env['dungeons.creature_type'].search([('name', '=', 'Defense Creature')]).id
 
                 })
+                
+
 
             if production_coal + b.heart.coal >= 0 and production_iron + b.heart.iron >= 0 and production_steel +\
                     b.heart.steel >= 0 and production_magical_creatures + b.heart.magical_creature >= 0 and \

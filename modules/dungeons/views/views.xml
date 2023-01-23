@@ -41,7 +41,11 @@
             <field name="res_model">dungeons.battle</field>
             <field name="view_mode">kanban,calendar,tree,form</field>
         </record>
-
+         <record model="ir.actions.act_window" id="dungeons.action_creatures_window">
+            <field name="name">Creatures</field>
+            <field name="res_model">dungeons.creatures</field>
+            <field name="view_mode">tree,form</field>
+        </record>
 
         <!-- server action to the one above -->
         <!--
@@ -80,6 +84,9 @@
                   action="dungeons.action_creature_type_window"/>
         <menuitem name="Battle" id="dungeons.battle_list" parent="dungeons.game"
                   action="dungeons.action_battle_window"/>
+         <menuitem name="Creatures" id="dungeons.creatures_list" parent="dungeons.game"
+                  action="dungeons.action_creatures_window"/>
+
 
     </data>
 </odoo>
