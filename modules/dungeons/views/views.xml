@@ -84,7 +84,7 @@
                   action="dungeons.action_creature_type_window"/>
         <menuitem name="Battle" id="dungeons.battle_list" parent="dungeons.game"
                   action="dungeons.action_battle_window"/>
-         <menuitem name="Creatures" id="dungeons.creatures_list" parent="dungeons.game"
+         <menuitem name="Creatures" id="dungeons.creatures_tree" parent="dungeons.game"
                   action="dungeons.action_creatures_window"/>
 
 

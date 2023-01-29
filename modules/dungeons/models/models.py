@@ -90,7 +90,6 @@ class heart(models.Model):
             h.production_magical_creatures = sum(h.buildings.mapped('production_magical_creatures'))
             h.production_warrior_creatures = sum(h.buildings.mapped('production_warrior_creatures'))
             h.production_defense_creatures = sum(h.buildings.mapped('production_defense_creatures'))
-            #print(self.creatures)
 
 
     @api.model
@@ -203,19 +202,21 @@ class buildings(models.Model):
 
             for c in range(0,production_magical_creatures):
                 self.env['dungeons.creatures'].create({
-                    "heart": self.heart.id,
+                    "heart": self.heart.ids[0], #Comentar a Jose
                     "creature_type": self.env['dungeons.creature_type'].search([('name', '=', 'Magical Creature')]).id
 
                 })
+
+
             for c in range(0,production_warrior_creatures):
                 self.env['dungeons.creatures'].create({
-                    "heart": self.heart.id,
+                    "heart": self.heart.ids[0],
                     "creature_type": self.env['dungeons.creature_type'].search([('name', '=', 'Warrior Creature')]).id
 
                 })
             for c in range(0,production_defense_creatures):
                 self.env['dungeons.creatures'].create({
-                    "heart": self.heart.id,
+                    "heart": self.heart.ids[0],
                     "creature_type": self.env['dungeons.creature_type'].search([('name', '=', 'Defense Creature')]).id
 
                 })
@@ -323,22 +324,21 @@ class battle(models.Model):  # falta terminar
     player2 = fields.Many2one('res.partner')
     heart1 = fields.Many2one('dungeons.heart')
     heart2 = fields.Many2one('dungeons.heart')
-    creatures1_list = fields.One2many('dungeons.battle_creatures_rel', 'battle_id')
     creatures1_available = fields.Many2many('dungeons.heart_creatures_rel', compute='_get_creatures_available')
     total_power = fields.Float()  # ORM Mapped
-    # winner = fields.Many2one()
+    winner = fields.Many2one()
     draft = fields.Boolean()
 
-    @api.depends('creatures1_list', 'heart2', 'heart1')
+    @api.depends('creatures1_available', 'heart2', 'heart1')
     def _get_time(self):
         for b in self:
             b.time = 0
             b.distance = 0
             b.date_end = fields.Datetime.now()
-            if len(b.heart1) > 0 and len(b.heart2) > 0 and len(b.creatures1_list) > 0 and len(
-                    b.creatures1_list.creatures_id) > 0:
+            if len(b.heart1) > 0 and len(b.heart2) > 0 and len(b.creatures1_available) > 0 and len(
+                    b.creatures1_available.creatures_id) > 0:
                 b.distance = b.heart1.distance(b.heart2)
-                min_speed = b.creatures1_list.creatures_id.sorted(lambda s: s.speed).mapped('speed')[0]
+                min_speed = b.creatures1_available.creatures_id.sorted(lambda s: s.speed).mapped('speed')[0]
                 b.time = b.distance / min_speed
                 b.date_end = fields.Datetime.to_string(
                     fields.Datetime.from_string(b.date_start) + timedelta(minutes=b.time))
@@ -368,41 +368,53 @@ class battle(models.Model):  # falta terminar
     def _get_creatures_available(self):
 
         for b in self:
-            print(b.heart1.creatures.ids)
             b.creatures1_available = b.heart1.creatures.ids
 
     def launch_battle(self):
         for b in self:
-            if len(b.heart1) == 1 and len(b.heart2) == 1 and len(b.creatures1_list) > 0 and b.state == '1':
-                print(b.creatures1_list)
-               # b.date_start = fields.Datetime.now()
-                #b.progress = 0
-                #for s in b.creatures1_list:
-                 #   creatures_available = \
-                  #      b.creatures1_available.filtered(lambda s_a: s_a.creatures_id.id == s.creatures_id.id)[0]
-                   # creatures_available.qty -= s.qty
-                #b.state = '2'
+            if len(b.heart1) == 1 and len(b.heart2) == 1 and len(b.creatures1_available) > 0 and b.state == '1':
+                b.date_start = fields.Datetime.now()
+                b.progress = 0
+                b.state = '2'
+
+
+    def execute_battle(self):
+        for b in self:
+            result = b.simulate_battle()
 
     def back(self):
         for b in self:
             if b.state == '2':
                 b.state = '1'
 
+    def simulate_battle(self):
+        b = self
+        b.winner = False
+        b.draft = False
+        tottal_attack_player1 = sum(creature.creature_type.attack for creature in b.heart1.creatures)
+       # tottal_attack_player2 = sum(creature.creature_type.attack for creature in b.heart2.creatures)
+       # tottal_defense_player1 = sum(creature.creature_type.defense for creature in b.heart1.creatures)
+        tottal_defense_player2 = sum(creature.creature_type.defense for creature in b.heart2.creatures)
+        defense_heart_player2 = b.heart2.life
 
+        if tottal_attack_player1 > (tottal_defense_player2+defense_heart_player2):
+            b.winner = b.player1.id
+            #mover recursos de jugador 2 a jugador 1
+        elif tottal_attack_player1 < (tottal_defense_player2+defense_heart_player2):
+            # eliminar todas las criaturas del player1 (b.heart1.creatures=[])
+            b.winner = b.player2.id
+        else:
+            b.draft = True
 
-    def execute_battle(self):
-        print("execute")
+        b.state = '3'
 
     def back(self):
-        print("back")
+        for b in self:
+            if b.state == '2':
+                b.state = '1'
 
-    def simulate_battle(self):
-        print("simulate")
-       # b = self
-       # winner = False
-        #draft = False
-       # creatures1 = b.creatures1_list.mapped(lambda s:[s.creatures_id.read(['id', 'life', 'attack', 'defense'])])
-
+            if b.state == '3':
+                b.state = '2'
 
 class battle_creatures_rel(models.Model):
     _name = 'dungeons.battle_creatures_rel'
@@ -423,21 +435,6 @@ class heart_creatures_rel(models.Model):
     heart_id = fields.Many2one('dungeons.heart')
     qty = fields.Integer()
 
-    def add_to_battle(self):  # ORM
-        for c in self:
-            if (c.qty > 0):
-                battle_id = self.env['dungeons.battle'].browse(self.env.context['ctx_battle'])[0]
-                current_creatures = battle_id.creatures1_list.filtered(
-                    lambda s: s.creatures_id.id == c.creatures_id.id)
-                if len(current_creatures) == 0:
-                    current_creatures = self.env['dungeons.battle_creatures_rel'].create({
-                        "creatures_id": c.creatures_id.id,
-                        "battle_id": battle_id.id,
-                        "qty": 0
-                    })
-                if current_creatures.qty < c.qty:
-                    current_creatures.qty += 1
-                # c.qty -= 1
 
 
 
@@ -456,7 +453,6 @@ class battle_wizard(models.TransientModel):
     player2 = fields.Many2one('res.partner')
     heart1 = fields.Many2one('dungeons.heart')
     heart2 = fields.Many2one('dungeons.heart')
-    creatures1_list = fields.One2many('dungeons.battle_creatures_rel', 'battle_id')
     creatures1_available = fields.Many2many('dungeons.heart_creatures_rel', compute='_get_creatures_available')
     total_power = fields.Float()  # ORM Mapped
 
@@ -484,7 +480,6 @@ class battle_wizard(models.TransientModel):
     def _get_creatures_available(self):
 
         for b in self:
-            print(b.heart1.creatures.ids)
             b.creatures1_available = b.heart1.creatures.ids
 
 
@@ -516,16 +511,16 @@ class battle_wizard(models.TransientModel):
             'res_id': self.id
         }
 
-    @api.depends('creatures1_list', 'heart2', 'heart1')
+    @api.depends('creatures1_available', 'heart2', 'heart1')
     def _get_time(self):
         for b in self:
             b.time = 0
             b.distance = 0
             b.date_end = fields.Datetime.now()
-            if len(b.heart1) > 0 and len(b.heart2) > 0 and len(b.creatures1_list) > 0 and len(
-                    b.creatures1_list.creatures_id) > 0:
+            if len(b.heart1) > 0 and len(b.heart2) > 0 and len(b.creatures1_available) > 0 and len(
+                    b.creatures1_available.creatures_id) > 0:
                 b.distance = b.heart1.distance(b.heart2)
-                min_speed = b.creatures1_list.creatures_id.sorted(lambda s: s.speed).mapped('speed')[0]
+                min_speed = b.creatures1_available.creatures_id.sorted(lambda s: s.speed).mapped('speed')[0]
                 b.time = b.distance / min_speed
                 b.date_end = fields.Datetime.to_string(
                     fields.Datetime.from_string(b.date_start) + timedelta(minutes=b.time))
