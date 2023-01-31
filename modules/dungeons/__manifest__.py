@@ -32,6 +32,7 @@
         'views/building_type_view.xml',
         'views/creature_type_view.xml',
         'views/views.xml',
+        'views/creatures_view.xml',
         'views/templates.xml',
         'demo/data.xml',
         'views/cron.xml',

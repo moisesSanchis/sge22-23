@@ -324,7 +324,7 @@ class battle(models.Model):  # falta terminar
     player2 = fields.Many2one('res.partner')
     heart1 = fields.Many2one('dungeons.heart')
     heart2 = fields.Many2one('dungeons.heart')
-    creatures1_available = fields.Many2many('dungeons.heart_creatures_rel', compute='_get_creatures_available')
+    creatures1_available = fields.Many2many('dungeons.creatures', compute='_get_creatures_available')
     total_power = fields.Float()  # ORM Mapped
     winner = fields.Many2one()
     draft = fields.Boolean()
@@ -346,7 +346,7 @@ class battle(models.Model):  # falta terminar
     @api.onchange('player1')
     def onchange_player1(self):
         if len(self.player1) > 0:
-            self.name = self.player1.name
+           # self.name = self.player1.name
             return {
                 'domain': {
                     'heart1': [('id', 'in', self.player1.heart_player.ids)],
@@ -415,7 +415,7 @@ class battle(models.Model):  # falta terminar
 
             if b.state == '3':
                 b.state = '2'
-
+"""
 class battle_creatures_rel(models.Model):
     _name = 'dungeons.battle_creatures_rel'
     _description = 'battle_creatures_rel'
@@ -425,12 +425,12 @@ class battle_creatures_rel(models.Model):
     battle_id = fields.Many2one('dungeons.battle')
     qty = fields.Integer()
 
-
+"""
 class heart_creatures_rel(models.Model):
     _name = 'dungeons.heart_creatures_rel'
     _description = 'heart_creatures_rel'
 
-    name = fields.Char(related="creatures_id.name")
+    name = fields.Char(related="creatures_id.creature_type.name")
     creatures_id = fields.Many2one('dungeons.creatures')
     heart_id = fields.Many2one('dungeons.heart')
     qty = fields.Integer()
@@ -453,7 +453,7 @@ class battle_wizard(models.TransientModel):
     player2 = fields.Many2one('res.partner')
     heart1 = fields.Many2one('dungeons.heart')
     heart2 = fields.Many2one('dungeons.heart')
-    creatures1_available = fields.Many2many('dungeons.heart_creatures_rel', compute='_get_creatures_available')
+    creatures1_available = fields.Many2many(compute='_get_creatures_available')
     total_power = fields.Float()  # ORM Mapped
 
     @api.onchange('player1')
@@ -517,12 +517,10 @@ class battle_wizard(models.TransientModel):
             b.time = 0
             b.distance = 0
             b.date_end = fields.Datetime.now()
-            if len(b.heart1) > 0 and len(b.heart2) > 0 and len(b.creatures1_available) > 0 and len(
-                    b.creatures1_available.creatures_id) > 0:
+            if len(b.heart1) > 0 and len(b.heart2) > 0 and len(b.creatures1_available) > 0 and len(b.creatures1_available.creatures_id) > 0:
                 b.distance = b.heart1.distance(b.heart2)
                 min_speed = b.creatures1_available.creatures_id.sorted(lambda s: s.speed).mapped('speed')[0]
                 b.time = b.distance / min_speed
-                b.date_end = fields.Datetime.to_string(
-                    fields.Datetime.from_string(b.date_start) + timedelta(minutes=b.time))
+                b.date_end = fields.Datetime.to_string(fields.Datetime.from_string(b.date_start) + timedelta(minutes=b.time))
 
 

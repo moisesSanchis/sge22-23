@@ -2,6 +2,7 @@
   <data>
 
     <record model="ir.ui.view" id="dungeons.creatures_tree">
+      <field name="inherit_id"/>
       <field name="name">dungeons creatures list</field>
       <field name="model">dungeons.creatures</field>
       <field name="arch" type="xml">
