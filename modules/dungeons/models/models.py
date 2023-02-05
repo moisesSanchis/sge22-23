@@ -202,7 +202,7 @@ class buildings(models.Model):
 
             for c in range(0,production_magical_creatures):
                 self.env['dungeons.creatures'].create({
-                    "heart": self.heart.ids[0], #Comentar a Jose
+                    "heart": self.heart.ids[0],
                     "creature_type": self.env['dungeons.creature_type'].search([('name', '=', 'Magical Creature')]).id
 
                 })
@@ -326,8 +326,23 @@ class battle(models.Model):  # falta terminar
     heart2 = fields.Many2one('dungeons.heart')
     creatures1_available = fields.Many2many('dungeons.creatures', compute='_get_creatures_available')
     total_power = fields.Float()  # ORM Mapped
-    winner = fields.Many2one()
+    winner = fields.Many2one('res.partner')
     draft = fields.Boolean()
+    qty_creatures1 = fields.Integer(compute='_get_creatures_1')
+    qty_creatures2 = fields.Integer(compute='_get_creatures_2')
+
+
+
+
+
+
+    def _get_creatures_1(self):
+        for b in self:
+            b.qty_creatures1 = b.heart1.defense_creature + b.heart1.warrior_creature + b.heart1.magical_creature
+
+    def _get_creatures_2(self):
+        for b in self:
+            b.qty_creatures2 = b.heart2.defense_creature + b.heart2.warrior_creature + b.heart2.magical_creature
 
     @api.depends('creatures1_available', 'heart2', 'heart1')
     def _get_time(self):
@@ -366,28 +381,26 @@ class battle(models.Model):  # falta terminar
 
     @api.depends('heart1')
     def _get_creatures_available(self):
-
         for b in self:
             b.creatures1_available = b.heart1.creatures.ids
 
-    def launch_battle(self):
+    def prepare_battle(self):
+
         for b in self:
+
             if len(b.heart1) == 1 and len(b.heart2) == 1 and len(b.creatures1_available) > 0 and b.state == '1':
                 b.date_start = fields.Datetime.now()
-                b.progress = 0
+                b.progress = 50
                 b.state = '2'
 
 
+    def launch_battle(self):
+        for b in self:
+            result = b.execute_battle()
+
+
+
     def execute_battle(self):
-        for b in self:
-            result = b.simulate_battle()
-
-    def back(self):
-        for b in self:
-            if b.state == '2':
-                b.state = '1'
-
-    def simulate_battle(self):
         b = self
         b.winner = False
         b.draft = False
@@ -399,33 +412,40 @@ class battle(models.Model):  # falta terminar
 
         if tottal_attack_player1 > (tottal_defense_player2+defense_heart_player2):
             b.winner = b.player1.id
-            #mover recursos de jugador 2 a jugador 1
+
+            b.heart2.iron = b.heart2.iron - (b.heart2.iron * 0.8)
+            b.heart2.coal = b.heart2.coal - (b.heart2.coal * 0.8)
+            b.heart2.steel = b.heart2.steel - (b.heart2.steel * 0.8)
+            b.heart2.gold = b.heart2.gold - (b.heart2.gold * 0.8)
+
+            b.heart1.iron = b.heart1.iron + (b.heart1.iron * 0.8)
+            b.heart1.coal = b.heart1.coal + (b.heart1.coal * 0.8)
+            b.heart1.steel = b.heart1.steel + (b.heart1.steel * 0.8)
+            b.heart1.gold = b.heart1.gold + (b.heart1.gold * 0.8)
+
         elif tottal_attack_player1 < (tottal_defense_player2+defense_heart_player2):
-            # eliminar todas las criaturas del player1 (b.heart1.creatures=[])
+            #for c in self:
+                #c.heart1.creatures.unlink()
+
             b.winner = b.player2.id
         else:
             b.draft = True
 
         b.state = '3'
+        b.progress = 100
+
+
 
     def back(self):
         for b in self:
             if b.state == '2':
                 b.state = '1'
+                b.progress = 0
 
             if b.state == '3':
                 b.state = '2'
-"""
-class battle_creatures_rel(models.Model):
-    _name = 'dungeons.battle_creatures_rel'
-    _description = 'battle_creatures_rel'
+                b.progress = 50
 
-    name = fields.Char(related="creatures_id.name")
-    creatures_id = fields.Many2one('dungeons.creatures')
-    battle_id = fields.Many2one('dungeons.battle')
-    qty = fields.Integer()
-
-"""
 class heart_creatures_rel(models.Model):
     _name = 'dungeons.heart_creatures_rel'
     _description = 'heart_creatures_rel'

@@ -20,10 +20,10 @@
             <field name="arch" type="xml">
                 <form>
                     <header>
-                        <button name="launch_battle" type="object" string="Launch Battle"
+                          <button name="prepare_battle" type="object" string="Send"
                                 class="btn btn-primary"/>
-                        <button name="back" type="object" string="Back" class="btn btn-primary"/>
-                        <button name="simulate_battle" type="object" string="Simulation"
+                         <button name="back" type="object" string="Back" class="btn btn-primary"/>
+                        <button name="launch_battle" type="object" string="Launch Battle"
                                 class="btn btn-primary"/>
 
                         <field name="state" widget="statusbar"/>
@@ -43,11 +43,8 @@
                     <notebook>
                         <page string="Creatures">
                             <group>
-                                <field name="creatures1_available">
-                                    <tree>
-                                        <field name="name"/>
-                                    </tree>
-                                </field>
+                                <field name="qty_creatures1" string="Creatures heart1"/>
+                                <field name="qty_creatures2" string="Creatures heart2"/>
                             </group>
                         </page>
                     </notebook>
