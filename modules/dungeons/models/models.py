@@ -387,6 +387,7 @@ class battle(models.Model):  # falta terminar
     def prepare_battle(self):
 
         for b in self:
+            print(len(b.creatures1_available))
 
             if len(b.heart1) == 1 and len(b.heart2) == 1 and len(b.creatures1_available) > 0 and b.state == '1':
                 b.date_start = fields.Datetime.now()
@@ -413,15 +414,16 @@ class battle(models.Model):  # falta terminar
         if tottal_attack_player1 > (tottal_defense_player2+defense_heart_player2):
             b.winner = b.player1.id
 
+            b.heart1.iron = b.heart1.iron + (b.heart2.iron * 0.8)
+            b.heart1.coal = b.heart1.coal + (b.heart2.coal * 0.8)
+            b.heart1.steel = b.heart1.steel + (b.heart2.steel * 0.8)
+            b.heart1.gold = b.heart1.gold + (b.heart2.gold * 0.8)
+
             b.heart2.iron = b.heart2.iron - (b.heart2.iron * 0.8)
             b.heart2.coal = b.heart2.coal - (b.heart2.coal * 0.8)
             b.heart2.steel = b.heart2.steel - (b.heart2.steel * 0.8)
             b.heart2.gold = b.heart2.gold - (b.heart2.gold * 0.8)
 
-            b.heart1.iron = b.heart1.iron + (b.heart1.iron * 0.8)
-            b.heart1.coal = b.heart1.coal + (b.heart1.coal * 0.8)
-            b.heart1.steel = b.heart1.steel + (b.heart1.steel * 0.8)
-            b.heart1.gold = b.heart1.gold + (b.heart1.gold * 0.8)
 
         elif tottal_attack_player1 < (tottal_defense_player2+defense_heart_player2):
             #for c in self:

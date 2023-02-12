@@ -36,7 +36,7 @@
             <field name="defense_creature">20</field>
             <field name="player" ref="dungeons.player_demo_2"/>
         </record>
-        <record id="dungeons.heart_demo_3" model="dungeons.heart">
+       <record id="dungeons.heart_demo_3" model="dungeons.heart">
             <field name="name">Corazon de Carlos</field>
             <field name="life">1600</field>
             <field name="iron">100</field>
