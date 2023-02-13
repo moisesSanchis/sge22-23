@@ -93,7 +93,6 @@
             <field name="arch" type="xml">
                 <calendar string="Battle Calendar"
                           date_start="date_start"
-                          date_stop="date_end"
                           color="player1"
                 >
                     <field name="name"/>
@@ -104,47 +103,31 @@
             </field>
         </record>
 
-        <record model="ir.ui.view" id="dungeons.battle_wizard_form_list">
-            <field name="name">dungeons battle wizard</field>
-            <field name="model">dungeons.battle_wizard</field>
-            <field name="arch" type="xml">
-                <form>
-                    <header>
-                        <field name="state" widget="statusbar"/>
-                    </header>
-                    <group states="1">
-                        <field name="name"/>
-                        <field name="player1"/>
-                        <field name="heart1"/>
-                        <field name="creatures1_available"/>
-                    </group>
-                    <group states="2">
-                        <field name="player2"/>
-                        <field name="heart2"/>
-                    </group>
-                    <group states="3">
-                        <!-- <field name="winner"/>-->
-                    </group>
-                    <footer>
-                        <button name="action_previous" type="object"
-                                string="Previous"
-                                states="2,3"/>
-                        <button name="action_next" type="object"
-                                string="Next" states="1,2"
-                                class="oe_highlight"/>
-                    </footer>
 
-                </form>
-            </field>
-        </record>
-
-        <record id="dungeons.battle_wizard_action" model="ir.actions.act_window">
-            <field name="name">Create battle</field>
-            <field name="res_model">dungeons.battle_wizard</field>
+        <record id="dungeons.battle_wizard_2_action" model="ir.actions.act_window">
+            <field name="name">battle wizard 2</field>
+            <field name="res_model">dungeons.battle_wizard_2</field>
             <field name="view_mode">form</field>
             <field name="target">new</field>
         </record>
 
+<record model="ir.ui.view" id="dungeons.battle_wizard_2_form_list">
+            <field name="name">dungeons battle wizard 2</field>
+            <field name="model">dungeons.battle_wizard_2</field>
+            <field name="arch" type="xml">
+            <form>
+                 <header>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                <group states="1">
+                    <field name="name"/>
+                    <field name="player1"/>
+                    <field name="heart1"/>
+                </group>
+
+            </form>
+            </field>
+</record>
 
     </data>
 </odoo>

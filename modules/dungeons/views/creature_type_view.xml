@@ -11,7 +11,6 @@
                     <field name="life"/>
                     <field name="attack"/>
                     <field name="defense"/>
-                     <field name="speed"/>
                 </tree>
             </field>
         </record>
@@ -28,7 +27,7 @@
                             <field name="life" widget="progressbar"/>
                             <field name="attack" widget="progressbar"/>
                             <field name="defense" widget="progressbar"/>
-                              <field name="speed" widget="progressbar"/>
+
 
                         </group>
                     </sheet>
@@ -45,7 +44,7 @@
                     <field name="life"/>
                     <field name="attack"/>
                     <field name="defense"/>
-                      <field name="speed"/>
+
                     <templates>
                         <t t-name="kanban-box">
                             <div t-attf-class="oe_kanban_card o_kanban_record_has_image_fill ">

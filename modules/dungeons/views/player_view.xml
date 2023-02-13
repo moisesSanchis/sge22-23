@@ -55,7 +55,7 @@
                             <field name="password" password="true"/>
                             <field name="is_player"/>
                             <button name="%(dungeons.building_wizard_action)d" type="action" string="Create Building" class="oe_highlight" />
-                            <button name="%(dungeons.battle_wizard_action)d" type="action" string="Create Battle" class="oe_highlight" />
+                            <button name="%(dungeons.battle_wizard_2_action)d" type="action" string="Create Battle" class="oe_highlight" />
                         </group>
                     </sheet>
                 </form>

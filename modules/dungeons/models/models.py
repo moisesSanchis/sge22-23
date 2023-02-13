@@ -298,7 +298,7 @@ class creature_type(models.Model):
     life = fields.Float()
     defense = fields.Float()
     attack = fields.Float()
-    speed = fields.Float(default=5)
+
 
 class creatures(models.Model):
     _name = 'dungeons.creatures'
@@ -315,9 +315,6 @@ class battle(models.Model):  # falta terminar
     name = fields.Char()
     image_battle = fields.Image(max_width=200, max_height=200)
     date_start = fields.Datetime(readonly=True, default=fields.Datetime.now)
-    date_end = fields.Datetime(compute='_get_time')
-    time = fields.Float(compute='_get_time')
-    distance = fields.Float(compute='_get_time')
     progress = fields.Float()
     state = fields.Selection([('1', 'Preparation'), ('2', 'Send'), ('3', 'Finished')], default='1')
     player1 = fields.Many2one('res.partner')
@@ -325,14 +322,10 @@ class battle(models.Model):  # falta terminar
     heart1 = fields.Many2one('dungeons.heart')
     heart2 = fields.Many2one('dungeons.heart')
     creatures1_available = fields.Many2many('dungeons.creatures', compute='_get_creatures_available')
-    total_power = fields.Float()  # ORM Mapped
     winner = fields.Many2one('res.partner')
     draft = fields.Boolean()
     qty_creatures1 = fields.Integer(compute='_get_creatures_1')
     qty_creatures2 = fields.Integer(compute='_get_creatures_2')
-
-
-
 
 
 
@@ -344,19 +337,7 @@ class battle(models.Model):  # falta terminar
         for b in self:
             b.qty_creatures2 = b.heart2.defense_creature + b.heart2.warrior_creature + b.heart2.magical_creature
 
-    @api.depends('creatures1_available', 'heart2', 'heart1')
-    def _get_time(self):
-        for b in self:
-            b.time = 0
-            b.distance = 0
-            b.date_end = fields.Datetime.now()
-            if len(b.heart1) > 0 and len(b.heart2) > 0 and len(b.creatures1_available) > 0 and len(
-                    b.creatures1_available.creatures_id) > 0:
-                b.distance = b.heart1.distance(b.heart2)
-                min_speed = b.creatures1_available.creatures_id.sorted(lambda s: s.speed).mapped('speed')[0]
-                b.time = b.distance / min_speed
-                b.date_end = fields.Datetime.to_string(
-                    fields.Datetime.from_string(b.date_start) + timedelta(minutes=b.time))
+
 
     @api.onchange('player1')
     def onchange_player1(self):
@@ -400,7 +381,6 @@ class battle(models.Model):  # falta terminar
             result = b.execute_battle()
 
 
-
     def execute_battle(self):
         b = self
         b.winner = False
@@ -426,8 +406,13 @@ class battle(models.Model):  # falta terminar
 
 
         elif tottal_attack_player1 < (tottal_defense_player2+defense_heart_player2):
-            #for c in self:
-                #c.heart1.creatures.unlink()
+            for c in self:
+                c.heart1.creatures.unlink()
+
+            self.heart1.defense_creature = 0
+            self.heart1.warrior_creature = 0
+            self.heart1.defense_creature = 0
+
 
             b.winner = b.player2.id
         else:
@@ -448,35 +433,30 @@ class battle(models.Model):  # falta terminar
                 b.state = '2'
                 b.progress = 50
 
-class heart_creatures_rel(models.Model):
-    _name = 'dungeons.heart_creatures_rel'
-    _description = 'heart_creatures_rel'
-
-    name = fields.Char(related="creatures_id.creature_type.name")
-    creatures_id = fields.Many2one('dungeons.creatures')
-    heart_id = fields.Many2one('dungeons.heart')
-    qty = fields.Integer()
-
-
-
 
 
 class battle_wizard(models.TransientModel):
     _name = 'dungeons.battle_wizard'
     _description = 'Battle wizard'
 
+
+
+class battle_wizard_2(models.TransientModel):
+    _name = 'dungeons.battle_wizard_2'
+    _description = 'Battle wizard 2'
+
     name = fields.Char()
     date_start = fields.Datetime(readonly=True, default=fields.Datetime.now)
-    date_end = fields.Datetime(compute='_get_time')
-    time = fields.Float(compute='_get_time')
-    distance = fields.Float(compute='_get_time')
     state = fields.Selection([('1', 'Select player1'), ('2', 'Select Player2'), ('3', 'Resume')], default='1')
     player1 = fields.Many2one('res.partner')
     player2 = fields.Many2one('res.partner')
     heart1 = fields.Many2one('dungeons.heart')
     heart2 = fields.Many2one('dungeons.heart')
     creatures1_available = fields.Many2many(compute='_get_creatures_available')
-    total_power = fields.Float()  # ORM Mapped
+
+    def _get_creatures_available(self):
+        for b in self:
+            b.creatures1_available = b.heart1.creatures.ids
 
     @api.onchange('player1')
     def onchange_player1(self):
@@ -499,13 +479,7 @@ class battle_wizard(models.TransientModel):
                 }
             }
 
-    def _get_creatures_available(self):
-
-        for b in self:
-            b.creatures1_available = b.heart1.creatures.ids
-
-
-    def  action_previous(self):
+    def action_previous(self):
         if self.state == '2':
             self.state = '1'
         elif self.state == '3':
@@ -513,7 +487,7 @@ class battle_wizard(models.TransientModel):
         return {
             'name': 'Create Battle',
             'type': 'ir.actions.act_window',
-            'res_model': 'dungeons.battle_wizard',
+            'res_model': 'dungeons.battle_wizard_2',
             'view_mode': 'form',
             'target': 'new',
             'res_id': self.id
@@ -527,22 +501,8 @@ class battle_wizard(models.TransientModel):
         return {
             'name': 'Create Battle',
             'type': 'ir.actions.act_window',
-            'res_model': 'dungeons.battle_wizard',
+            'res_model': 'dungeons.battle_wizard_2',
             'view_mode': 'form',
             'target': 'new',
             'res_id': self.id
         }
-
-    @api.depends('creatures1_available', 'heart2', 'heart1')
-    def _get_time(self):
-        for b in self:
-            b.time = 0
-            b.distance = 0
-            b.date_end = fields.Datetime.now()
-            if len(b.heart1) > 0 and len(b.heart2) > 0 and len(b.creatures1_available) > 0 and len(b.creatures1_available.creatures_id) > 0:
-                b.distance = b.heart1.distance(b.heart2)
-                min_speed = b.creatures1_available.creatures_id.sorted(lambda s: s.speed).mapped('speed')[0]
-                b.time = b.distance / min_speed
-                b.date_end = fields.Datetime.to_string(fields.Datetime.from_string(b.date_start) + timedelta(minutes=b.time))
-
-

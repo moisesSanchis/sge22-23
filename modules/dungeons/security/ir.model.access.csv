@@ -5,7 +5,7 @@ access_dungeons_building_type,dungeons.building_type,model_dungeons_building_typ
 access_dungeons_creature_type,dungeons.creature_type,model_dungeons_creature_type,base.group_user,1,1,1,1
 access_dungeons_creatures,dungeons.creatures,model_dungeons_creatures,base.group_user,1,1,1,1
 access_dungeons_battle,dungeons.battle,model_dungeons_battle,base.group_user,1,1,1,1
-access_dungeons_heart_creatures_rel,dungeons.heart_creatures_rel,model_dungeons_heart_creatures_rel,base.group_user,1,1,1,1
 access_dungeons_building_wizard,dungeons.building_wizard,model_dungeons_building_wizard,base.group_user,1,1,1,1
 access_dungeons_battle_wizard,dungeons.battle_wizard,model_dungeons_battle_wizard,base.group_user,1,1,1,1
 
+access_dungeons_battle_wizard_2,dungeons.battle_wizard_2,model_dungeons_battle_wizard_2,base.group_user,1,1,1,1
