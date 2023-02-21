@@ -53,6 +53,9 @@ class heart(models.Model):
     production_warrior_creatures = fields.Float(compute='_get_total_productions')
     production_defense_creatures = fields.Float(compute='_get_total_productions')
 
+
+
+
     @api.depends('gold')  # Funcion para mostrar los edificios segun el oro disponible.
     def _get_available_buildings(self):
         for c in self:
@@ -298,6 +301,9 @@ class creature_type(models.Model):
     life = fields.Float()
     defense = fields.Float()
     attack = fields.Float()
+    magical_creature = fields.Char()
+    warrior_creature = fields.Char()
+    defense_creature = fields.Char()
 
 
 class creatures(models.Model):
@@ -445,7 +451,7 @@ class battle_wizard_2(models.TransientModel):
     _name = 'dungeons.battle_wizard_2'
     _description = 'Battle wizard 2'
 
-    name = fields.Char()
+    name = fields.Char(default='battle')
     date_start = fields.Datetime(readonly=True, default=fields.Datetime.now)
     state = fields.Selection([('1', 'Select player1'), ('2', 'Select Player2'), ('3', 'Resume')], default='1')
     player1 = fields.Many2one('res.partner')
@@ -453,6 +459,8 @@ class battle_wizard_2(models.TransientModel):
     heart1 = fields.Many2one('dungeons.heart')
     heart2 = fields.Many2one('dungeons.heart')
     creatures1_available = fields.Many2many(compute='_get_creatures_available')
+    qty_creatures1 = fields.Integer(compute='_get_creatures_1')
+
 
     def _get_creatures_available(self):
         for b in self:
@@ -461,7 +469,7 @@ class battle_wizard_2(models.TransientModel):
     @api.onchange('player1')
     def onchange_player1(self):
         if len(self.player1) > 0:
-            self.name = self.player1.name
+           # self.name = self.player1.name
             return {
                 'domain': {
                     'heart1': [('id', 'in', self.player1.heart_player.ids)],
@@ -495,14 +503,58 @@ class battle_wizard_2(models.TransientModel):
 
     def action_next(self):
         if self.state == '1':
+            if len(self.player1) < 1 or len(self.heart1) < 1:
+                return {
+                    'type': 'ir.actions.client',
+                    'tag': 'display_notification',
+                    'params': {
+                        'message': 'Player1 and heart1 have to be chosen',
+                        'type': 'danger',
+                        'sticky': False,
+                    }
+                }
             self.state = '2'
         elif self.state == '2':
-            self.state = '3'
+            if len(self.player2) < 1 or len(self.heart2) < 1:
+                return {
+                    'type': 'ir.actions.client',
+                    'tag': 'display_notification',
+                    'params': {
+                        'message': 'Player2 and heart2 have to be chosen',
+                        'type': 'danger',
+                        'sticky': False,
+                    }
+                }
+            else: self.state = '3'
         return {
             'name': 'Create Battle',
             'type': 'ir.actions.act_window',
             'res_model': 'dungeons.battle_wizard_2',
             'view_mode': 'form',
             'target': 'new',
-            'res_id': self.id
+            'res_id': self.id,
+            'context': dict(self._context, player1_context = self.player1.id),
+        }
+
+    def _get_creatures_1(self):
+        for b in self:
+            b.qty_creatures1 = b.heart1.defense_creature + b.heart1.warrior_creature + b.heart1.magical_creature
+
+    def create_battle(self):
+        new_battle = self.env['dungeons.battle'].create({
+            'name': self.name,
+            'player1':self.player1.id,
+            'player2':self.player2.id,
+            'heart1': self.heart1.id,
+            'heart2': self.heart2.id,
+            'state': '1',
+            'date_start': self.date_start,
+        })
+        return {
+            'name': 'Created battle',
+            'type': 'ir.actions.act_window',
+            'res_model': 'dungeons.battle',
+            'view_mode': 'form',
+            'target': 'current',
+            'res_id': new_battle.id,
         }

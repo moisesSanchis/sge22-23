@@ -111,23 +111,53 @@
             <field name="target">new</field>
         </record>
 
-<record model="ir.ui.view" id="dungeons.battle_wizard_2_form_list">
+       <record id="dungeons.battle_wizard_2_action" model="ir.actions.act_window">
+            <field name="name">battle wizard 2</field>
+            <field name="res_model">dungeons.battle_wizard_2</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <record model="ir.ui.view" id="dungeons.battle_wizard_2_form_list">
             <field name="name">dungeons battle wizard 2</field>
             <field name="model">dungeons.battle_wizard_2</field>
             <field name="arch" type="xml">
-            <form>
-                 <header>
+                <form>
+                    <header>
                         <field name="state" widget="statusbar"/>
+                        <button name="action_previous" type="object"
+                                string="Previous"
+                                states="2,3"/>
+                        <button name="action_next" type="object"
+                                string="Next" states="1,2"
+                                class="oe_highlight"/>
                     </header>
-                <group states="1">
-                    <field name="name"/>
-                    <field name="player1"/>
-                    <field name="heart1"/>
-                </group>
+                    <group states="1">
+                        <field name="name"/>
+                        <field name="player1"/>
+                        <field name="heart1"/>
+                    </group>
+                    <group states="2">
+                        <field name="player2"/>
+                        <field name="heart2"/>
+                    </group>
 
-            </form>
+                    <group states="3">
+                        <field name="player1"/>
+                        <field name="heart1"/>
+                        <field name="qty_creatures1"/>
+                        <field name="player2"/>
+                        <field name="heart2"/>
+                        <button name="create_battle"
+                                type="object"
+                                string="Add"
+                                class="btn btn-primary"
+                        ></button>
+                    </group>
+
+                </form>
             </field>
-</record>
+        </record>
 
     </data>
 </odoo>
